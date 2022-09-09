@@ -1,4 +1,4 @@
 import AddPlaceForm from "./AddPlaceForm";
-import "./AddPlaceForm.scss";
+// import "./AddPlaceForm.scss";
 
 export default AddPlaceForm;
