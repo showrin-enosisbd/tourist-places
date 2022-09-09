@@ -10,8 +10,9 @@ function App() {
 			<Grid>
 				<Row>
 					<Col
+						xs={12}
 						md={8}
-						mdPush={2}
+						mdOffset={2}
 					>
 						<Switch>
 							<Route

@@ -14,14 +14,24 @@ const FieldGroup = ({ id, label, help, ...props }) => {
 			<Row>
 				<Col
 					componentClass={ControlLabel}
+					xs={12}
 					sm={2}
 				>
-					<ControlLabel>{label}</ControlLabel>
+					{label}
 				</Col>
-				<Col sm={10}>
+				<Col
+					xs={12}
+					sm={10}
+				>
 					<FormControl {...props} />
 				</Col>
-				<Col sm={12}>{help && <HelpBlock>{help}</HelpBlock>}</Col>
+				<Col
+					xs={12}
+					sm={10}
+					smOffset={2}
+				>
+					{help && <HelpBlock>{help}</HelpBlock>}
+				</Col>
 			</Row>
 		</FormGroup>
 	);
