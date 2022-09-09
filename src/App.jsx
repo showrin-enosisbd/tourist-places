@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Grid } from "react-bootstrap";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import AddPlaceForm from "./components/AddPlaceForm";
+import Home from "./pages/Home";
 import "./App.scss";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
 							/>
 							<Route
 								path="/"
-								component={AddPlaceForm}
+								component={Home}
 								exact
 							/>
 						</Switch>
