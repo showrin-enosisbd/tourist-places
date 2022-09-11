@@ -22,6 +22,7 @@ const PlaceTable = ({
 	deletePlace,
 	sortDirection,
 	onSortDirectionChange,
+	emptyTableMsg,
 }) => {
 	const onDeletePlace = (placeId, placeName) => {
 		const wantToDelete = window.confirm(
@@ -70,6 +71,16 @@ const PlaceTable = ({
 					</tr>
 				</thead>
 				<tbody>
+					{places.length === 0 && (
+						<tr>
+							<td
+								className="place-table__empty-msg"
+								colSpan={PLACE_TABLE_HEADERS.length}
+							>
+								{emptyTableMsg}
+							</td>
+						</tr>
+					)}
 					{places.map((place) => (
 						<tr key={place.id}>
 							{PLACE_TABLE_HEADERS.map((header) => {

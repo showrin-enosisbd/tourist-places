@@ -2,7 +2,12 @@ import { connect } from "react-redux";
 
 import { deletePlace } from "../store/actions";
 import PlaceTable from "../components/PlaceTable";
-import { SORT_DIRECTION_ASC, SORT_DIRECTION_NORMAL } from "../utils/constants";
+import {
+	NO_PLACES_ADDED,
+	NO_PLACES_Found,
+	SORT_DIRECTION_ASC,
+	SORT_DIRECTION_NORMAL,
+} from "../utils/constants";
 
 const sortPlacesByRating = (places, sortDirection) => {
 	return [...places].sort((a, b) => {
@@ -24,6 +29,7 @@ const searchPlaces = (places, keyWord) => {
 const mapStateToProps = (state, ownProps) => {
 	const { searchKeyword, sortDirection } = ownProps;
 	let places = state.places;
+	let emptyTableMsg = "";
 
 	if (sortDirection !== SORT_DIRECTION_NORMAL) {
 		places = sortPlacesByRating(places, sortDirection);
@@ -33,8 +39,15 @@ const mapStateToProps = (state, ownProps) => {
 		places = searchPlaces(places, searchKeyword);
 	}
 
+	if (state.places.length === 0) {
+		emptyTableMsg = NO_PLACES_ADDED;
+	} else if (places.length === 0) {
+		emptyTableMsg = NO_PLACES_Found;
+	}
+
 	return {
 		places,
+		emptyTableMsg,
 	};
 };
 

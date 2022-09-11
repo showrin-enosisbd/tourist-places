@@ -38,3 +38,6 @@ export const DEFAULT_FORM_FIELD_ERRORS = {
 export const SORT_DIRECTION_ASC = "asc";
 export const SORT_DIRECTION_DESC = "desc";
 export const SORT_DIRECTION_NORMAL = "none";
+
+export const NO_PLACES_ADDED = "No places added yet...";
+export const NO_PLACES_Found = "No places found...";
