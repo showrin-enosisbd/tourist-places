@@ -8,9 +8,12 @@ import {
 	HelpBlock,
 } from "react-bootstrap";
 
-const FieldGroup = ({ id, label, help, ...props }) => {
+const FieldGroup = ({ className, id, label, help, ...props }) => {
 	return (
-		<FormGroup controlId={id}>
+		<FormGroup
+			className={className}
+			controlId={id}
+		>
 			<Row>
 				<Col
 					componentClass={ControlLabel}

@@ -1,4 +1,11 @@
 .add-place-form {
+	&__input {
+		select,
+		option {
+			text-transform: capitalize;
+		}
+	}
+
 	&__footer {
 		display: flex;
 		align-items: center;

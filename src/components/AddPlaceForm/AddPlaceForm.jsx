@@ -1,50 +1,125 @@
-import React from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import React, { useState, useRef, useEffect } from "react";
+import { Row, Col, Button } from "react-bootstrap";
 import FieldGroup from "../FieldGroup";
 
+import {
+	PLACE_TYPES,
+	DEFAULT_PLACE_TYPE,
+	DEFAULT_PLACE_RATING,
+} from "../../utils/constants";
+import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
+
 const AddPlaceForm = () => {
+	const [name, setName] = useState("");
+	const [address, setAddress] = useState("");
+	const [rating, setRating] = useState(DEFAULT_PLACE_RATING);
+	const [type, setType] = useState(DEFAULT_PLACE_TYPE);
+	const [picture, setPicture] = useState({ file: null, base64String: "" });
+	const pictureInputRef = useRef();
+
+	const onPictureChange = (pictureFile) => {
+		convertImageFiletoBase64String(pictureFile).then((base64String) =>
+			setPicture({
+				file: pictureFile,
+				base64String,
+			})
+		);
+	};
+
+	const onFormSubmit = (event) => {
+		event.preventDefault();
+	};
+
+	const onFormReset = (event) => {
+		event.preventDefault();
+
+		setName("");
+		setAddress("");
+		setRating(DEFAULT_PLACE_RATING);
+		setType(DEFAULT_PLACE_TYPE);
+		setPicture({ file: null, base64String: "" });
+	};
+
+	useEffect(() => {
+		// manually setting value and files
+		// since In React, an <input type="file" /> is always an uncontrolled component
+		// because its value can only be set by a user, and not programmatically.
+		// src: https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag:~:text=In%20React%2C%20an%20%3Cinput%20type%3D%22file%22%20/%3E%20is%20always%20an%20uncontrolled%20component%20because%20its%20value%20can%20only%20be%20set%20by%20a%20user%2C%20and%20not%20programmatically.
+
+		if (pictureInputRef.current) {
+			if (picture.file) {
+				pictureInputRef.current.file = picture.file;
+			} else {
+				pictureInputRef.current.value = "";
+			}
+		}
+	}, [picture]);
+
 	return (
-		<Form>
+		<form
+			className="add-place-form"
+			onSubmit={onFormSubmit}
+			onReset={onFormReset}
+		>
 			<FieldGroup
+				className="add-place-form__input"
 				id="name"
 				type="text"
 				label="Name:"
 				placeholder="Name"
+				value={name}
+				onChange={(event) => setName(event.target.value)}
 				required
 			/>
 			<FieldGroup
+				className="add-place-form__input"
 				id="address"
 				type="text"
 				label="Address:"
 				placeholder="Address"
+				value={address}
+				onChange={(event) => setAddress(event.target.value)}
 				required
 			/>
 			<FieldGroup
+				className="add-place-form__input"
 				id="rating"
 				type="number"
 				label="Rating:"
 				placeholder="Rating"
 				min={1}
 				max={5}
+				value={rating}
+				onChange={(event) => setRating(event.target.value)}
 				required
 			/>
 			<FieldGroup
+				className="add-place-form__input"
 				id="type"
 				componentClass="select"
 				label="Type:"
 				placeholder="Type"
+				value={type}
+				onChange={(event) => setType(event.target.value)}
 				required
 			>
-				<option value="beach">Beach</option>
-				<option value="hills">Hills</option>
-				<option value="fountain">Fountain</option>
-				<option value="landmark">Landmark</option>
+				{PLACE_TYPES.map((placeType) => (
+					<option
+						key={placeType}
+						value={placeType}
+					>
+						{placeType}
+					</option>
+				))}
 			</FieldGroup>
 			<FieldGroup
+				className="add-place-form__input"
 				id="picture"
+				inputRef={pictureInputRef}
 				type="file"
 				label="Picture:"
 				placeholder="Picture"
+				onChange={(event) => onPictureChange(event.target.files[0])}
 				required
 			/>
 			<Row>
@@ -69,7 +144,7 @@ const AddPlaceForm = () => {
 					</div>
 				</Col>
 			</Row>
-		</Form>
+		</form>
 	);
 };
 
