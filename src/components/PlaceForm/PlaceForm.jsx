@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
-import FieldGroup from "../FieldGroup";
 
+import FieldGroup from "../FieldGroup";
 import {
 	PLACE_TYPES,
 	DEFAULT_PLACE_TYPE,
@@ -10,7 +11,11 @@ import {
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
 import uuid from "../../utils/uuid";
 
-const PlaceForm = ({ defaultFormFields, addPlace }) => {
+const PlaceForm = ({
+	history: browserHistory,
+	defaultFormFields,
+	addPlace,
+}) => {
 	const [name, setName] = useState(defaultFormFields.name);
 	const [address, setAddress] = useState(defaultFormFields.address);
 	const [rating, setRating] = useState(defaultFormFields.rating);
@@ -40,6 +45,8 @@ const PlaceForm = ({ defaultFormFields, addPlace }) => {
 		};
 
 		addPlace(newPlace);
+
+		browserHistory.push("/");
 	};
 
 	const onFormReset = (event) => {
@@ -157,4 +164,4 @@ const PlaceForm = ({ defaultFormFields, addPlace }) => {
 	);
 };
 
-export default PlaceForm;
+export default withRouter(PlaceForm);
