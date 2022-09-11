@@ -27,3 +27,9 @@ input[type="file"] {
 		outline: 0;
 	}
 }
+
+[class*="-page"] {
+	&[class*="container"] {
+		padding: 20px 15px 60px;
+	}
+}

@@ -36,7 +36,7 @@ const PlaceForm = ({ defaultFormFields, addPlace }) => {
 			address,
 			rating,
 			type,
-			picture,
+			picture: picture.base64String,
 		};
 
 		addPlace(newPlace);

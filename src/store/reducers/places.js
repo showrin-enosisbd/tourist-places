@@ -1,6 +1,7 @@
 import { ADD_PLACE } from "../types";
+import fakePlaces from "../../data/dummyPlaces";
 
-const initialState = [];
+const initialState = [...fakePlaces];
 
 const places = (state = initialState, action) => {
 	if (action.type === ADD_PLACE) {

@@ -1,11 +1,18 @@
+.place-table-container {
+	overflow-x: auto;
+	margin-bottom: 20px;
+}
+
 .place-table {
 	border-collapse: separate;
 	border-spacing: 2px;
 	border: 2px solid #000000;
 	width: 100%;
+	margin: 0;
 
 	& > tbody > tr > td {
 		border-top: 0;
+		vertical-align: middle;
 	}
 
 	th {
@@ -34,6 +41,12 @@
 			height: 130px;
 			object-fit: cover;
 			width: 200px;
+		}
+	}
+
+	&__action-button {
+		&:not(:last-of-type) {
+			margin-right: 10px;
 		}
 	}
 }

@@ -13,3 +13,16 @@ export const DEFAULT_FORM_FIELDS = {
 		base64String: "",
 	},
 };
+
+export const PLACE_TABLE_NAME_HEADER = "name";
+export const PLACE_TABLE_ADDRESS_HEADER = "address";
+export const PLACE_TABLE_RATING_HEADER = "rating";
+export const PLACE_TABLE_PICTURE_HEADER = "picture";
+export const PLACE_TABLE_ACTION_HEADER = "action";
+export const PLACE_TABLE_HEADERS = [
+	PLACE_TABLE_NAME_HEADER,
+	PLACE_TABLE_ADDRESS_HEADER,
+	PLACE_TABLE_RATING_HEADER,
+	PLACE_TABLE_PICTURE_HEADER,
+	PLACE_TABLE_ACTION_HEADER,
+];
