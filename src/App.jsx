@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import New from "./pages/New";
+import NotFound from "./pages/NotFound";
 import "./App.scss";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
 					path="/new"
 					component={New}
 				/>
-				<Route component={() => "Not found"} />
+				<Route component={NotFound} />
 			</Switch>
 		</BrowserRouter>
 	);
