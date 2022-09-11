@@ -44,6 +44,38 @@
 		}
 	}
 
+	&__header {
+		&-rating {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&-indicator-container {
+				display: flex;
+				flex-direction: column;
+				font-size: 10px;
+				margin-left: 8px;
+			}
+
+			&-indicator {
+				opacity: 1;
+				transition: opacity 0.1s ease;
+
+				&--down {
+					margin-top: -2px;
+				}
+
+				&--hidden {
+					opacity: 0;
+				}
+			}
+		}
+
+		&--clickable {
+			cursor: pointer;
+		}
+	}
+
 	&__action-button {
 		&:not(:last-child) {
 			margin-right: 10px;

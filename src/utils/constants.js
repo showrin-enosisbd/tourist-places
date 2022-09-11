@@ -26,3 +26,7 @@ export const PLACE_TABLE_HEADERS = [
 	PLACE_TABLE_PICTURE_HEADER,
 	PLACE_TABLE_ACTION_HEADER,
 ];
+
+export const SORT_DIRECTION_ASC = "asc";
+export const SORT_DIRECTION_DESC = "desc";
+export const SORT_DIRECTION_NORMAL = "none";
