@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
-import Places from "./pages/Places";
+import New from "./pages/New";
 import "./App.scss";
 
 function App() {
@@ -9,14 +9,15 @@ function App() {
 		<BrowserRouter>
 			<Switch>
 				<Route
-					path="/places"
-					component={Places}
-				/>
-				<Route
 					path="/"
 					component={Home}
 					exact
 				/>
+				<Route
+					path="/new"
+					component={New}
+				/>
+				<Route component={() => "Not found"} />
 			</Switch>
 		</BrowserRouter>
 	);
