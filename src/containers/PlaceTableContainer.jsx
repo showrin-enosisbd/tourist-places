@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-// import { updatePlace } from "../store/actions";
+import { deletePlace } from "../store/actions";
 import PlaceTable from "../components/PlaceTable";
 
 const mapStateToProps = (state) => {
@@ -10,7 +10,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {};
+	return {
+		deletePlace: (placeId) => dispatch(deletePlace(placeId)),
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaceTable);

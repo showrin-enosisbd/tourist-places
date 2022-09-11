@@ -11,7 +11,17 @@ import {
 } from "../../utils/constants";
 import PlaceTableActionCell from "./components/PlaceTableActionCell";
 
-const PlaceTable = ({ className, places }) => {
+const PlaceTable = ({ className, places, deletePlace }) => {
+	const onDeletePlace = (placeId, placeName) => {
+		const wantToDelete = window.confirm(
+			`Do you want to delete "${placeName}"?`
+		);
+
+		if (wantToDelete) {
+			deletePlace(placeId);
+		}
+	};
+
 	return (
 		<div className="place-table-container">
 			<Table className={classNames("place-table", className)}>
@@ -36,7 +46,7 @@ const PlaceTable = ({ className, places }) => {
 									tableData = (
 										<PlaceTableActionCell
 											editPageUrl={`/edit/${place.id}`}
-											deletePlace={() => console.log("Delete", place.id)}
+											deletePlace={() => onDeletePlace(place.id, place.name)}
 										/>
 									);
 								} else {
