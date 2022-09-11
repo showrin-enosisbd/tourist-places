@@ -3,18 +3,16 @@ import { withRouter } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
 import FieldGroup from "../FieldGroup";
-import {
-	PLACE_TYPES,
-	DEFAULT_PLACE_TYPE,
-	DEFAULT_PLACE_RATING,
-} from "../../utils/constants";
+import { PLACE_TYPES } from "../../utils/constants";
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
 import uuid from "../../utils/uuid";
 
 const PlaceForm = ({
 	history: browserHistory,
 	defaultFormFields,
+	placeToEdit,
 	addPlace,
+	updatePlace,
 }) => {
 	const [name, setName] = useState(defaultFormFields.name);
 	const [address, setAddress] = useState(defaultFormFields.address);
@@ -22,6 +20,7 @@ const PlaceForm = ({
 	const [type, setType] = useState(defaultFormFields.type);
 	const [picture, setPicture] = useState(defaultFormFields.picture);
 	const pictureInputRef = useRef();
+	const isEditing = !!placeToEdit;
 
 	const onPictureChange = (pictureFile) => {
 		convertImageFiletoBase64String(pictureFile).then((base64String) =>
@@ -35,8 +34,8 @@ const PlaceForm = ({
 	const onFormSubmit = (event) => {
 		event.preventDefault();
 
-		const newPlace = {
-			id: uuid(),
+		const placeDetails = {
+			id: isEditing ? defaultFormFields.id : uuid(),
 			name,
 			address,
 			rating,
@@ -44,7 +43,11 @@ const PlaceForm = ({
 			picture: picture.base64String,
 		};
 
-		addPlace(newPlace);
+		if (isEditing) {
+			updatePlace(placeDetails);
+		} else {
+			addPlace(placeDetails);
+		}
 
 		browserHistory.push("/");
 	};
@@ -52,11 +55,11 @@ const PlaceForm = ({
 	const onFormReset = (event) => {
 		event.preventDefault();
 
-		setName("");
-		setAddress("");
-		setRating(DEFAULT_PLACE_RATING);
-		setType(DEFAULT_PLACE_TYPE);
-		setPicture({ file: null, base64String: "" });
+		setName(defaultFormFields.name);
+		setAddress(defaultFormFields.address);
+		setRating(defaultFormFields.rating);
+		setType(defaultFormFields.type);
+		setPicture(defaultFormFields.picture);
 	};
 
 	useEffect(() => {

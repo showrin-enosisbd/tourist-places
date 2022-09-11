@@ -45,7 +45,7 @@
 	}
 
 	&__action-button {
-		&:not(:last-of-type) {
+		&:not(:last-child) {
 			margin-right: 10px;
 		}
 	}

@@ -1,4 +1,4 @@
-import Places from "./New";
+import New from "./New";
 import "./New.scss";
 
-export default Places;
+export default New;

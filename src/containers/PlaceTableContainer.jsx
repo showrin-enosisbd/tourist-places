@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 
-// import { DEFAULT_FORM_FIELDS } from "../utils/constants";
-// import { addPlace } from "../store/actions";
+// import { updatePlace } from "../store/actions";
 import PlaceTable from "../components/PlaceTable";
 
 const mapStateToProps = (state) => {
@@ -11,9 +10,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		// addPlace: (newPlace) => dispatch(addPlace(newPlace)),
-	};
+	return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaceTable);

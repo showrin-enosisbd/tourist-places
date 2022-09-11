@@ -4,18 +4,18 @@ import { PageHeader, Grid, Row, Col, Button } from "react-bootstrap";
 
 import PlaceFormContainer from "../../containers/PlaceFormContainer";
 
-const New = () => {
+const Edit = ({ placeToEdit }) => {
 	return (
-		<Grid className="new-page">
+		<Grid className="edit-page">
 			<Row>
 				<Col xs={12} md={8} mdOffset={2}>
-					<PageHeader>Add A New Tourist Place</PageHeader>
-					<PlaceFormContainer />
+					<PageHeader>Update Details Of {placeToEdit.name}</PageHeader>
+					<PlaceFormContainer placeToEdit={placeToEdit} />
 					<Row>
 						<Col xs={12}>
-							<div className="new-page__footer">
+							<div className="edit-page__footer">
 								<Link to="/">
-									<Button className="new-page__footer-link" bsStyle="link">
+									<Button className="edit-page__footer-link" bsStyle="link">
 										Back to Tourist Place List
 									</Button>
 								</Link>
@@ -28,4 +28,4 @@ const New = () => {
 	);
 };
 
-export default New;
+export default Edit;

@@ -33,7 +33,12 @@ const PlaceTable = ({ className, places }) => {
 
 									tableData = <img alt={alt} src={place[header]} />;
 								} else if (header === PLACE_TABLE_ACTION_HEADER) {
-									tableData = <PlaceTableActionCell />;
+									tableData = (
+										<PlaceTableActionCell
+											editPageUrl={`/edit/${place.id}`}
+											deletePlace={() => console.log("Delete", place.id)}
+										/>
+									);
 								} else {
 									tableData = place[header];
 								}
