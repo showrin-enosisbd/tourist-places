@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Col, Row, PageHeader, Button } from "react-bootstrap";
 import PlaceTableContainer from "../../containers/PlaceTableContainer";
 import SearchInput from "../../components/SearchInput";
 
 const Home = () => {
+	const [searchKeyword, setSearchKeyword] = useState("");
+
 	return (
 		<Grid className="home-page" fluid>
 			<Row>
@@ -12,12 +14,18 @@ const Home = () => {
 					<PageHeader>Place List</PageHeader>
 					<Row>
 						<Col xs={12} sm={6}>
-							<SearchInput />
+							<SearchInput
+								value={searchKeyword}
+								onChange={(event) => setSearchKeyword(event.target.value)}
+							/>
 						</Col>
 					</Row>
 					<Row>
 						<Col xs={12}>
-							<PlaceTableContainer className="home-page__table" />
+							<PlaceTableContainer
+								className="home-page__table"
+								searchKeyword={searchKeyword}
+							/>
 						</Col>
 					</Row>
 					<Row>

@@ -3,9 +3,20 @@ import { connect } from "react-redux";
 import { deletePlace } from "../store/actions";
 import PlaceTable from "../components/PlaceTable";
 
-const mapStateToProps = (state) => {
+const searchPlaces = (places, keyWord) => {
+	return places.filter((place) => place.name.toLowerCase().includes(keyWord));
+};
+
+const mapStateToProps = (state, ownProps) => {
+	const { searchKeyword } = ownProps;
+	let places = state.places;
+
+	if (searchKeyword) {
+		places = searchPlaces(places, searchKeyword);
+	}
+
 	return {
-		places: state.places,
+		places,
 	};
 };
 
