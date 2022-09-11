@@ -8,13 +8,14 @@ import {
 	DEFAULT_PLACE_RATING,
 } from "../../utils/constants";
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
+import uuid from "../../utils/uuid";
 
-const AddPlaceForm = () => {
-	const [name, setName] = useState("");
-	const [address, setAddress] = useState("");
-	const [rating, setRating] = useState(DEFAULT_PLACE_RATING);
-	const [type, setType] = useState(DEFAULT_PLACE_TYPE);
-	const [picture, setPicture] = useState({ file: null, base64String: "" });
+const PlaceForm = ({ defaultFormFields, addPlace }) => {
+	const [name, setName] = useState(defaultFormFields.name);
+	const [address, setAddress] = useState(defaultFormFields.address);
+	const [rating, setRating] = useState(defaultFormFields.rating);
+	const [type, setType] = useState(defaultFormFields.type);
+	const [picture, setPicture] = useState(defaultFormFields.picture);
 	const pictureInputRef = useRef();
 
 	const onPictureChange = (pictureFile) => {
@@ -28,6 +29,17 @@ const AddPlaceForm = () => {
 
 	const onFormSubmit = (event) => {
 		event.preventDefault();
+
+		const newPlace = {
+			id: uuid(),
+			name,
+			address,
+			rating,
+			type,
+			picture,
+		};
+
+		addPlace(newPlace);
 	};
 
 	const onFormReset = (event) => {
@@ -104,10 +116,7 @@ const AddPlaceForm = () => {
 				required
 			>
 				{PLACE_TYPES.map((placeType) => (
-					<option
-						key={placeType}
-						value={placeType}
-					>
+					<option key={placeType} value={placeType}>
 						{placeType}
 					</option>
 				))}
@@ -148,4 +157,4 @@ const AddPlaceForm = () => {
 	);
 };
 
-export default AddPlaceForm;
+export default PlaceForm;

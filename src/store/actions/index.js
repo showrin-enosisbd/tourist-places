@@ -1,5 +1,1 @@
-import addPlace from "./addPlace";
-
-export default {
-	addPlace,
-};
+export { default as addPlace } from "./addPlace";

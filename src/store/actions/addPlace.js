@@ -2,7 +2,7 @@ import { ADD_PLACE } from "../types";
 
 const addPlace = (newPlace) => ({
 	type: ADD_PLACE,
-	place: newPlace,
+	payload: newPlace,
 });
 
 export default addPlace;
