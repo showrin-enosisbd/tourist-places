@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 			type: placeToEdit.type,
 			picture: {
 				file: null,
-				base64String: placeToEdit.picture,
+				base64String: "",
 			},
 		};
 	}

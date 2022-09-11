@@ -1,0 +1,27 @@
+.field-group {
+	margin-bottom: 40px;
+
+	&__input {
+		&--error:not([type="file"]) {
+			border-color: #d9534f;
+			outline: 0;
+			box-shadow: inset 0 1px 1px #00000014, 0 0 8px #d9534f99;
+		}
+	}
+
+	&__error {
+		width: 100%;
+		margin: 4px 0 0;
+		font-size: 14px;
+		color: #d9534f;
+		height: 0;
+		transform: translateY(-6px);
+		opacity: 0;
+		transition: transform 0.1s ease-in, opacity 0.1s ease-in;
+
+		&--visible {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+}

@@ -3,9 +3,11 @@ import { withRouter } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
 import FieldGroup from "../FieldGroup";
-import { PLACE_TYPES } from "../../utils/constants";
+import { DEFAULT_FORM_FIELD_ERRORS, PLACE_TYPES } from "../../utils/constants";
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
+import convertFirstLetterToUpperCase from "../../utils/convertFirstLetterToUpperCase";
 import uuid from "../../utils/uuid";
+import placeSchema from "../../validations/placeSchema";
 
 const PlaceForm = ({
 	history: browserHistory,
@@ -19,6 +21,7 @@ const PlaceForm = ({
 	const [rating, setRating] = useState(defaultFormFields.rating);
 	const [type, setType] = useState(defaultFormFields.type);
 	const [picture, setPicture] = useState(defaultFormFields.picture);
+	const [errors, setErrors] = useState(DEFAULT_FORM_FIELD_ERRORS);
 	const pictureInputRef = useRef();
 	const isEditing = !!placeToEdit;
 
@@ -31,7 +34,7 @@ const PlaceForm = ({
 		);
 	};
 
-	const onFormSubmit = (event) => {
+	const onFormSubmit = async (event) => {
 		event.preventDefault();
 
 		const placeDetails = {
@@ -43,13 +46,29 @@ const PlaceForm = ({
 			picture: picture.base64String,
 		};
 
-		if (isEditing) {
-			updatePlace(placeDetails);
-		} else {
-			addPlace(placeDetails);
-		}
+		const isValid = await placeSchema.isValid(placeDetails);
 
-		browserHistory.push("/");
+		if (isValid) {
+			if (isEditing) {
+				updatePlace(placeDetails);
+			} else {
+				addPlace(placeDetails);
+			}
+
+			browserHistory.push("/");
+		} else {
+			placeSchema.validate(placeDetails, { abortEarly: false }).catch((err) => {
+				const fieldErrors = err.inner.reduce(
+					(acc, error) => ({
+						...acc,
+						[error.path]: convertFirstLetterToUpperCase(error.message),
+					}),
+					{ [err.inner[0].path]: err.inner[0].message }
+				);
+
+				setErrors(fieldErrors);
+			});
+		}
 	};
 
 	const onFormReset = (event) => {
@@ -60,6 +79,8 @@ const PlaceForm = ({
 		setRating(defaultFormFields.rating);
 		setType(defaultFormFields.type);
 		setPicture(defaultFormFields.picture);
+
+		setErrors(DEFAULT_FORM_FIELD_ERRORS);
 	};
 
 	useEffect(() => {
@@ -82,29 +103,32 @@ const PlaceForm = ({
 			className="add-place-form"
 			onSubmit={onFormSubmit}
 			onReset={onFormReset}
+			noValidate
 		>
 			<FieldGroup
-				className="add-place-form__input"
+				className="add-place-form__input add-place-form__input--required"
 				id="name"
 				type="text"
 				label="Name:"
 				placeholder="Name"
 				value={name}
 				onChange={(event) => setName(event.target.value)}
+				error={errors.name}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input"
+				className="add-place-form__input add-place-form__input--required"
 				id="address"
 				type="text"
 				label="Address:"
 				placeholder="Address"
 				value={address}
 				onChange={(event) => setAddress(event.target.value)}
+				error={errors.address}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input"
+				className="add-place-form__input add-place-form__input--required"
 				id="rating"
 				type="number"
 				label="Rating:"
@@ -113,16 +137,18 @@ const PlaceForm = ({
 				max={5}
 				value={rating}
 				onChange={(event) => setRating(event.target.value)}
+				error={errors.rating}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input"
+				className="add-place-form__input add-place-form__input--required"
 				id="type"
 				componentClass="select"
 				label="Type:"
 				placeholder="Type"
 				value={type}
 				onChange={(event) => setType(event.target.value)}
+				error={errors.type}
 				required
 			>
 				{PLACE_TYPES.map((placeType) => (
@@ -132,13 +158,14 @@ const PlaceForm = ({
 				))}
 			</FieldGroup>
 			<FieldGroup
-				className="add-place-form__input"
+				className="add-place-form__input add-place-form__input--required"
 				id="picture"
 				inputRef={pictureInputRef}
 				type="file"
 				label="Picture:"
 				placeholder="Picture"
 				onChange={(event) => onPictureChange(event.target.files[0])}
+				error={errors.picture}
 				required
 			/>
 			<Row>

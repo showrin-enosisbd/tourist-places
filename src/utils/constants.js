@@ -27,6 +27,14 @@ export const PLACE_TABLE_HEADERS = [
 	PLACE_TABLE_ACTION_HEADER,
 ];
 
+export const DEFAULT_FORM_FIELD_ERRORS = {
+	name: "",
+	address: "",
+	rating: "",
+	type: "",
+	picture: "",
+};
+
 export const SORT_DIRECTION_ASC = "asc";
 export const SORT_DIRECTION_DESC = "desc";
 export const SORT_DIRECTION_NORMAL = "none";
