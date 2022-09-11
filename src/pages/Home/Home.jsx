@@ -28,7 +28,7 @@ const Home = () => {
 		<Grid className="home-page" fluid>
 			<Row>
 				<Col xs={12} md={10} mdOffset={1}>
-					<PageHeader>Place List</PageHeader>
+					<PageHeader>Tourist Places</PageHeader>
 					<Row>
 						<Col xs={12} sm={6}>
 							<SearchInput

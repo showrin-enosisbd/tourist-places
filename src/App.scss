@@ -6,6 +6,16 @@
 	}
 }
 
+button,
+.btn {
+	&,
+	&:focus,
+	&:focus-visible {
+		border: 0;
+		outline: 0 !important;
+	}
+}
+
 .form-group {
 	margin-bottom: 20px;
 }

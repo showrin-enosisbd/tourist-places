@@ -14,10 +14,8 @@ const Edit = ({ placeToEdit }) => {
 					<Row>
 						<Col xs={12}>
 							<div className="edit-page__footer">
-								<Link to="/">
-									<Button className="edit-page__footer-link" bsStyle="link">
-										Back to Tourist Place List
-									</Button>
+								<Link className="edit-page__footer-link" to="/">
+									<Button bsStyle="link">Back to Tourist Place List</Button>
 								</Link>
 							</div>
 						</Col>

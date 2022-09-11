@@ -14,10 +14,8 @@ const New = () => {
 					<Row>
 						<Col xs={12}>
 							<div className="new-page__footer">
-								<Link to="/">
-									<Button className="new-page__footer-link" bsStyle="link">
-										Back to Tourist Place List
-									</Button>
+								<Link className="new-page__footer-link" to="/">
+									<Button bsStyle="link">Back to Tourist Place List</Button>
 								</Link>
 							</div>
 						</Col>
