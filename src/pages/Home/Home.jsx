@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Col, Row, PageHeader, Button } from "react-bootstrap";
+import { Grid, Col, Row, PageHeader } from "react-bootstrap";
 
+import Button from "../../components/Button";
 import PlaceTableContainer from "../../containers/PlaceTableContainer";
 import SearchInput from "../../components/SearchInput";
 import {

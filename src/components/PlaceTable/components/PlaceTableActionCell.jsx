@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
+import Button from "../../Button";
 
 const PlaceTableActionCell = ({ editPageUrl, deletePlace }) => {
 	return (

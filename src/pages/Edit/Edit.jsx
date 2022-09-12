@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PageHeader, Grid, Row, Col, Button } from "react-bootstrap";
+import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
+import Button from "../../components/Button";
 import PlaceFormContainer from "../../containers/PlaceFormContainer";
 
 const Edit = ({ placeToEdit }) => {

@@ -29,7 +29,7 @@ const FieldGroup = ({ className, id, label, error, ...props }) => {
 				</Col>
 				<Col xs={12} sm={10}>
 					<FormControl
-						className={classNames({
+						className={classNames("field-group__input", {
 							"field-group__input--error": !!error,
 						})}
 						{...props}

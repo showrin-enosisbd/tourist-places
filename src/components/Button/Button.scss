@@ -1,0 +1,56 @@
+@import "../../stylesheets/variables";
+
+.button {
+	background-image: none;
+
+	&,
+	&:focus,
+	&:focus-visible {
+		border: 0;
+		outline: 0 !important;
+	}
+
+	&--primary {
+		background-color: $button-info-bg;
+
+		&,
+		&:active,
+		&:focus {
+			border-right: 2px solid $button-info-border;
+			border-bottom: 2px solid $button-info-border;
+		}
+	}
+
+	&--danger {
+		background-color: $button-danger-bg;
+
+		&,
+		&:active,
+		&:focus {
+			border-right: 2px solid $button-danger-border;
+			border-bottom: 2px solid $button-danger-border;
+		}
+	}
+
+	&--warning {
+		background-color: $button-warning-bg;
+
+		&,
+		&:active,
+		&:focus {
+			border-right: 2px solid $button-warning-border;
+			border-bottom: 2px solid $button-warning-border;
+		}
+	}
+
+	&--success {
+		background-color: $button-success-bg;
+
+		&,
+		&:active,
+		&:focus {
+			border-right: 2px solid $button-success-border;
+			border-bottom: 2px solid $button-success-border;
+		}
+	}
+}

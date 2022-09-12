@@ -6,16 +6,6 @@
 	}
 }
 
-button,
-.btn {
-	&,
-	&:focus,
-	&:focus-visible {
-		border: 0;
-		outline: 0 !important;
-	}
-}
-
 .form-control {
 	height: 40px;
 }
@@ -24,14 +14,6 @@ button,
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-}
-
-input[type="file"] {
-	cursor: pointer;
-
-	&:focus {
-		outline: 0;
-	}
 }
 
 [class*="-page"] {

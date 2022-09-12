@@ -1,0 +1,63 @@
+// -------- Basic Colors --------
+$white: #ffffff;
+
+$black: #000000;
+
+$gray: #7d7d7d;
+$gray-light: #efefef;
+$gray-dark: #7b7b7b;
+
+$info: #428bca;
+$info-light: #03a7ec;
+$info-dark: #225078;
+
+$success: #5cb85c;
+$success-dark: #306c30;
+
+$danger: #d9534f;
+$danger-dark: #862825;
+
+$warning: #f0ad4e;
+$warning-dark: #8f6221;
+
+// -------- Input --------
+$input-bg: $gray-light;
+$input-required-asterisk: $danger;
+
+$input-normal-border: $gray;
+$input-focused-border: $info;
+$input-focused-inset-shadow: rgba($black, 0.08);
+$input-focused-shadow: rgba($info, 0.6);
+
+$input-invalid-normal-border: $danger;
+$input-invalid-focused-border: $danger;
+$input-invalid-focused-inset-shadow: rgba($black, 0.08);
+$input-invalid-focused-shadow: rgba($danger, 0.6);
+
+$input-error-text: $danger;
+
+// -------- Button --------
+$button-info-bg: $info;
+$button-info-border: $info-dark;
+
+$button-danger-bg: $danger;
+$button-danger-border: $danger-dark;
+
+$button-success-bg: $success;
+$button-success-border: $success-dark;
+
+$button-warning-bg: $warning;
+$button-warning-border: $warning-dark;
+
+// -------- Link --------
+$link-color: $info-light;
+
+// -------- Table --------
+$table-border-color: $black;
+
+$table-header-bg: $black;
+$table-header-text: $white;
+
+$table-striped-data-bg: $gray-light;
+
+$table-empty-text: $gray-dark;

@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
+import Button from "../Button";
 import FieldGroup from "../FieldGroup";
 import { DEFAULT_FORM_FIELD_ERRORS, PLACE_TYPES } from "../../utils/constants";
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";

@@ -1,3 +1,5 @@
+@import "../../stylesheets/variables";
+
 .add-place-form {
 	&__input {
 		select,
@@ -7,7 +9,7 @@
 
 		&--required label::after {
 			content: "*";
-			color: #d9534f;
+			color: $danger;
 			font-weight: 700;
 			font-size: 18px;
 			margin-left: 4px;

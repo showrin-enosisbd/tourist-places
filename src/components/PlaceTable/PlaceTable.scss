@@ -1,3 +1,5 @@
+@import "../../stylesheets/variables";
+
 .place-table-container {
 	overflow-x: auto;
 	margin-bottom: 20px;
@@ -6,7 +8,7 @@
 .place-table {
 	border-collapse: separate;
 	border-spacing: 2px;
-	border: 2px solid #000000;
+	border: 2px solid $table-border-color;
 	width: 100%;
 	margin: 0;
 
@@ -16,8 +18,8 @@
 	}
 
 	th {
-		background-color: #000000;
-		color: #ffffff;
+		background-color: $table-header-bg;
+		color: $table-header-text;
 		font-size: 16px;
 		padding: 10px;
 		text-align: center;
@@ -26,7 +28,7 @@
 
 	tr {
 		&:nth-child(2n) td {
-			background-color: #efefef;
+			background-color: $table-striped-data-bg;
 		}
 	}
 
@@ -83,7 +85,7 @@
 	}
 
 	&__empty-msg {
-		color: #7b7b7b;
+		color: $table-empty-text;
 		height: 100px;
 	}
 }

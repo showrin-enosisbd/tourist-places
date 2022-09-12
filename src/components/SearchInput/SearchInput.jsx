@@ -5,6 +5,7 @@ const SearchInput = ({ value, onChange }) => {
 	return (
 		<Form>
 			<FormControl
+			className="search-input"
 				type="text"
 				name="search"
 				value={value}

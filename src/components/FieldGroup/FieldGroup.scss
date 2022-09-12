@@ -1,11 +1,36 @@
+@import "../../stylesheets/variables";
+
 .field-group {
 	margin-bottom: 40px;
 
-	&__input {
-		&--error:not([type="file"]) {
-			border-color: #d9534f;
+	input[type="file"] {
+		cursor: pointer;
+
+		&:focus {
 			outline: 0;
-			box-shadow: inset 0 1px 1px #00000014, 0 0 8px #d9534f99;
+		}
+	}
+
+	&__input {
+		&:not([type="file"]) {
+			background-color: $input-bg;
+
+			&:focus {
+				border-color: $input-focused-border;
+				outline: 0;
+				box-shadow: inset 0 1px 1px $input-focused-inset-shadow,
+					0 0 8px $input-focused-shadow;
+			}
+		}
+
+		&--error:not([type="file"]) {
+			&,
+			&:focus {
+				border-color: $input-invalid-normal-border;
+				outline: 0;
+				box-shadow: inset 0 1px 1px $input-invalid-focused-inset-shadow,
+					0 0 8px $input-invalid-focused-shadow;
+			}
 		}
 	}
 
@@ -13,7 +38,7 @@
 		width: 100%;
 		margin: 4px 0 0;
 		font-size: 14px;
-		color: #d9534f;
+		color: $input-error-text;
 		height: 0;
 		transform: translateY(-6px);
 		opacity: 0;
