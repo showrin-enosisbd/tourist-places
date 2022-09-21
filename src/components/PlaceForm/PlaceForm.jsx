@@ -19,6 +19,7 @@ const PlaceForm = ({
 }) => {
 	const [formValues, setFormValues] = useState(defaultFormFields);
 	const [errors, setErrors] = useState(DEFAULT_FORM_FIELD_ERRORS);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const pictureInputRef = useRef();
 	const isEditing = !!placeToEdit;
 
@@ -47,6 +48,7 @@ const PlaceForm = ({
 
 	const onFormSubmit = async (event) => {
 		event.preventDefault();
+		setIsSubmitting(true);
 
 		const placeDetails = {
 			...formValues,
@@ -54,7 +56,14 @@ const PlaceForm = ({
 			picture: formValues.picture.base64String,
 		};
 
-		const isValid = await placeSchema.isValid(placeDetails);
+		const waiter = new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(placeSchema.isValid(placeDetails));
+			}, [3000]);
+		});
+
+		const isValid = await waiter;
+		// const isValid = await placeSchema.isValid(placeDetails);
 
 		if (isValid) {
 			if (isEditing) {
@@ -77,6 +86,8 @@ const PlaceForm = ({
 				setErrors(fieldErrors);
 			});
 		}
+
+		setIsSubmitting(false);
 	};
 
 	const onFormReset = (event) => {
@@ -184,6 +195,7 @@ const PlaceForm = ({
 							bsStyle="success"
 							bsSize="large"
 							type="submit"
+							isLoading={isSubmitting}
 						>
 							Submit
 						</Button>
@@ -192,6 +204,7 @@ const PlaceForm = ({
 							bsStyle="warning"
 							bsSize="large"
 							type="reset"
+							disabled={isSubmitting}
 						>
 							Reset
 						</Button>

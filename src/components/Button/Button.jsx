@@ -1,8 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import { Button as BsButton } from "react-bootstrap";
+import Spinner from "../Spinner";
 
-const Button = ({ className, children, bsStyle, ...props }) => {
+const Button = ({ className, children, bsStyle, isLoading, ...props }) => {
 	return (
 		<BsButton
 			className={classNames(
@@ -12,13 +13,28 @@ const Button = ({ className, children, bsStyle, ...props }) => {
 					"button--danger": bsStyle === "danger",
 					"button--warning": bsStyle === "warning",
 					"button--success": bsStyle === "success",
+					"button--loading": isLoading,
 				},
 				className
 			)}
 			bsStyle={bsStyle}
+			disabled={isLoading}
 			{...props}
 		>
-			{children}
+			<span
+				className={classNames("button__spinner", {
+					"button__spinner--visible": isLoading,
+				})}
+			>
+				<Spinner />
+			</span>
+			<span
+				className={classNames("button__children", {
+					"button__children--visible": !isLoading,
+				})}
+			>
+				{children}
+			</span>
 		</BsButton>
 	);
 };
