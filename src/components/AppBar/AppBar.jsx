@@ -15,8 +15,8 @@ const AppBar = () => {
 							</Link>
 						</div>
 						<nav className="app-bar__nav">
-							<Link className="app-bar__nav-link" to="/">
-								<Button bsStyle="link">SignIn</Button>
+							<Link className="app-bar__nav-link" to="/login">
+								<Button bsStyle="link">Login</Button>
 							</Link>
 							|
 							<Link className="app-bar__nav-link" to="/">
