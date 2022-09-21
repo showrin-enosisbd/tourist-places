@@ -4,11 +4,11 @@ import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import Button from "../../components/Button";
 import PlaceFormContainer from "../../containers/PlaceFormContainer";
-import Layout from "../../components/Layout";
+import LayoutContainer from "../../containers/LayoutContainer";
 
 const New = () => {
 	return (
-		<Layout>
+		<LayoutContainer>
 			<Grid className="new-page">
 				<Row>
 					<Col xs={12} md={8} mdOffset={2}>
@@ -26,7 +26,7 @@ const New = () => {
 					</Col>
 				</Row>
 			</Grid>
-		</Layout>
+		</LayoutContainer>
 	);
 };
 

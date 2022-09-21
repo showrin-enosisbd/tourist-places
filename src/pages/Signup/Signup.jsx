@@ -1,12 +1,12 @@
 import React from "react";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
-import Layout from "../../components/Layout";
+import LayoutContainer from "../../containers/LayoutContainer";
 import SignupFormContainer from "./containers/SignupFormContainer";
 
 const Signup = () => {
 	return (
-		<Layout>
+		<LayoutContainer>
 			<Grid className="edit-page">
 				<Row>
 					<Col xs={12} md={8} mdOffset={2}>
@@ -19,7 +19,7 @@ const Signup = () => {
 					</Col>
 				</Row>
 			</Grid>
-		</Layout>
+		</LayoutContainer>
 	);
 };
 
