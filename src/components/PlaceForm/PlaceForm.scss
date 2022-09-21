@@ -6,14 +6,6 @@
 		option {
 			text-transform: capitalize;
 		}
-
-		&--required label::after {
-			content: "*";
-			color: $danger;
-			font-weight: 700;
-			font-size: 18px;
-			margin-left: 4px;
-		}
 	}
 
 	&__footer {

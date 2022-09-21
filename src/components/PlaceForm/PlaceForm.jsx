@@ -120,7 +120,7 @@ const PlaceForm = ({
 			noValidate
 		>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="name"
 				type="text"
 				label="Name:"
@@ -132,7 +132,7 @@ const PlaceForm = ({
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="address"
 				type="text"
 				label="Address:"
@@ -144,7 +144,7 @@ const PlaceForm = ({
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="rating"
 				type="number"
 				label="Rating:"
@@ -158,7 +158,7 @@ const PlaceForm = ({
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="type"
 				componentClass="select"
 				label="Type:"
@@ -176,7 +176,7 @@ const PlaceForm = ({
 				))}
 			</FieldGroup>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="picture"
 				inputRef={pictureInputRef}
 				type="file"

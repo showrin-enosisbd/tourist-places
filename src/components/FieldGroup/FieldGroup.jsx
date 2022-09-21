@@ -8,7 +8,7 @@ import {
 	FormControl,
 } from "react-bootstrap";
 
-const FieldGroup = ({ className, id, label, error, ...props }) => {
+const FieldGroup = ({ className, id, label, error, required, ...props }) => {
 	const [delayedErrorMsg, setDelayedErrorMsg] = useState("");
 
 	useEffect(() => {
@@ -22,7 +22,16 @@ const FieldGroup = ({ className, id, label, error, ...props }) => {
 	}, [error]);
 
 	return (
-		<FormGroup className={classNames("field-group", className)} controlId={id}>
+		<FormGroup
+			className={classNames(
+				"field-group",
+				{
+					"field-group--required": required,
+				},
+				className
+			)}
+			controlId={id}
+		>
 			<Row>
 				<Col componentClass={ControlLabel} xs={12} sm={2}>
 					{label}
@@ -32,6 +41,7 @@ const FieldGroup = ({ className, id, label, error, ...props }) => {
 						className={classNames("field-group__input", {
 							"field-group__input--error": !!error,
 						})}
+						required={required}
 						{...props}
 					/>
 				</Col>
