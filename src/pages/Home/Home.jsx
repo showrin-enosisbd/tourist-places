@@ -10,6 +10,7 @@ import {
 	SORT_DIRECTION_DESC,
 	SORT_DIRECTION_NORMAL,
 } from "../../utils/constants";
+import Layout from "../../components/Layout";
 
 const Home = () => {
 	const [searchKeyword, setSearchKeyword] = useState("");
@@ -26,40 +27,42 @@ const Home = () => {
 	};
 
 	return (
-		<Grid className="home-page" fluid>
-			<Row>
-				<Col xs={12} md={10} mdOffset={1}>
-					<PageHeader>Tourist Places</PageHeader>
-					<Row>
-						<Col xs={12} sm={6}>
-							<SearchInput
-								value={searchKeyword}
-								onChange={(event) => setSearchKeyword(event.target.value)}
-							/>
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12}>
-							<PlaceTableContainer
-								className="home-page__table"
-								sortDirection={sortDirection}
-								onSortDirectionChange={onSortDirectionChange}
-								searchKeyword={searchKeyword}
-							/>
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12}>
-							<Link to="/new">
-								<Button bsStyle="primary" bsSize="large">
-									Create a new tourist place
-								</Button>
-							</Link>
-						</Col>
-					</Row>
-				</Col>
-			</Row>
-		</Grid>
+		<Layout>
+			<Grid className="home-page" fluid>
+				<Row>
+					<Col xs={12} md={10} mdOffset={1}>
+						<PageHeader>Tourist Places</PageHeader>
+						<Row>
+							<Col xs={12} sm={6}>
+								<SearchInput
+									value={searchKeyword}
+									onChange={(event) => setSearchKeyword(event.target.value)}
+								/>
+							</Col>
+						</Row>
+						<Row>
+							<Col xs={12}>
+								<PlaceTableContainer
+									className="home-page__table"
+									sortDirection={sortDirection}
+									onSortDirectionChange={onSortDirectionChange}
+									searchKeyword={searchKeyword}
+								/>
+							</Col>
+						</Row>
+						<Row>
+							<Col xs={12}>
+								<Link to="/new">
+									<Button bsStyle="primary" bsSize="large">
+										Create a new tourist place
+									</Button>
+								</Link>
+							</Col>
+						</Row>
+					</Col>
+				</Row>
+			</Grid>
+		</Layout>
 	);
 };
 
