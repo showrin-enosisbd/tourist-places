@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 
 import AppBar from "../AppBar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user }) => {
 	return (
 		<Fragment>
-			<AppBar />
+			<AppBar user={user} />
 			{children}
 		</Fragment>
 	);

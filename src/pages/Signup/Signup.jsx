@@ -2,7 +2,7 @@ import React from "react";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import Layout from "../../components/Layout";
-import SignupForm from "./components/SignupForm";
+import SignupFormContainer from "./containers/SignupFormContainer";
 
 const Signup = () => {
 	return (
@@ -13,7 +13,7 @@ const Signup = () => {
 						<PageHeader>Signup</PageHeader>
 						<Row>
 							<Col xs={12}>
-								<SignupForm />
+								<SignupFormContainer />
 							</Col>
 						</Row>
 					</Col>

@@ -10,7 +10,7 @@ import {
 	SORT_DIRECTION_DESC,
 	SORT_DIRECTION_NORMAL,
 } from "../../utils/constants";
-import Layout from "../../components/Layout";
+import LayoutContainer from "../../containers/LayoutContainer";
 
 const Home = () => {
 	const [searchKeyword, setSearchKeyword] = useState("");
@@ -27,7 +27,7 @@ const Home = () => {
 	};
 
 	return (
-		<Layout>
+		<LayoutContainer>
 			<Grid className="home-page" fluid>
 				<Row>
 					<Col xs={12} md={10} mdOffset={1}>
@@ -62,7 +62,7 @@ const Home = () => {
 					</Col>
 				</Row>
 			</Grid>
-		</Layout>
+		</LayoutContainer>
 	);
 };
 

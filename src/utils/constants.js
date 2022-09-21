@@ -50,3 +50,14 @@ export const DEFAULT_LOGIN_FORM_FIELD_ERRORS = {
 	email: "",
 	password: "",
 };
+
+export const DEFAULT_SIGNUP_FORM_FIELDS = {
+	username: "",
+	email: "",
+	password: "",
+};
+export const DEFAULT_SIGNUP_FORM_FIELD_ERRORS = {
+	username: "",
+	email: "",
+	password: "",
+};

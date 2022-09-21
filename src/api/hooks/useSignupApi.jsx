@@ -2,7 +2,7 @@ import { useState } from "react";
 import apiClient from "../apiClient";
 import routes from "../routes";
 
-const useLoginApi = ({ email, password }) => {
+const useSignupApi = ({ username, email, password }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState({});
 	const [error, setError] = useState("");
@@ -11,8 +11,9 @@ const useLoginApi = ({ email, password }) => {
 		setIsLoading(true);
 
 		apiClient
-			.post(routes.login, {
-				username: email,
+			.post(routes.signup, {
+				username,
+				email,
 				password,
 			})
 			.then((response) => {
@@ -21,7 +22,7 @@ const useLoginApi = ({ email, password }) => {
 				setIsLoading(false);
 			})
 			.catch((err) => {
-				const errMsg = Object.values(err.response.data)[0][0];
+				const errMsg = err.response.data;
 
 				setError(errMsg);
 				setIsLoading(false);
@@ -31,4 +32,4 @@ const useLoginApi = ({ email, password }) => {
 	return { data, isLoading, error, callApi };
 };
 
-export default useLoginApi;
+export default useSignupApi;
