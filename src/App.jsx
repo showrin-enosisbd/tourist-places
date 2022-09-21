@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import New from "./pages/New";
 import EditPageContainer from "./containers/EditPageContainer";
 import NotFound from "./pages/NotFound";
@@ -18,6 +19,7 @@ function App() {
 				<Switch>
 					<Route path="/" component={Home} exact />
 					<Route path="/login" component={Login} />
+					<Route path="/signup" component={Signup} />
 					<Route path="/new" component={New} />
 					<Route path="/edit/:id" component={EditPageContainer} />
 					<Route component={NotFound} />
