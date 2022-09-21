@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 
-import { deletePlace } from "../store/actions";
+import { deletePlace } from "../../../store/actions";
 import PlaceTable from "../components/PlaceTable";
 import {
 	NO_PLACES_ADDED,
 	NO_PLACES_Found,
 	SORT_DIRECTION_ASC,
 	SORT_DIRECTION_NORMAL,
-} from "../utils/constants";
+} from "../../../utils/constants";
 
 const sortPlacesByRating = (places, sortDirection) => {
 	return [...places].sort((a, b) => {
@@ -28,25 +28,31 @@ const searchPlaces = (places, keyWord) => {
 
 const mapStateToProps = (state, ownProps) => {
 	const { searchKeyword, sortDirection } = ownProps;
-	let places = state.places;
+	let sortedAndFilteredPlaces = state.places;
 	let emptyTableMsg = "";
 
 	if (sortDirection !== SORT_DIRECTION_NORMAL) {
-		places = sortPlacesByRating(places, sortDirection);
+		sortedAndFilteredPlaces = sortPlacesByRating(
+			sortedAndFilteredPlaces,
+			sortDirection
+		);
 	}
 
 	if (searchKeyword) {
-		places = searchPlaces(places, searchKeyword);
+		sortedAndFilteredPlaces = searchPlaces(
+			sortedAndFilteredPlaces,
+			searchKeyword
+		);
 	}
 
 	if (state.places.length === 0) {
 		emptyTableMsg = NO_PLACES_ADDED;
-	} else if (places.length === 0) {
+	} else if (sortedAndFilteredPlaces.length === 0) {
 		emptyTableMsg = NO_PLACES_Found;
 	}
 
 	return {
-		places,
+		places: sortedAndFilteredPlaces,
 		emptyTableMsg,
 	};
 };

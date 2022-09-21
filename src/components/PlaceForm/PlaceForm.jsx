@@ -17,37 +17,53 @@ const PlaceForm = ({
 	addPlace,
 	updatePlace,
 }) => {
-	const [name, setName] = useState(defaultFormFields.name);
-	const [address, setAddress] = useState(defaultFormFields.address);
-	const [rating, setRating] = useState(defaultFormFields.rating);
-	const [type, setType] = useState(defaultFormFields.type);
-	const [picture, setPicture] = useState(defaultFormFields.picture);
+	const [formValues, setFormValues] = useState(defaultFormFields);
 	const [errors, setErrors] = useState(DEFAULT_FORM_FIELD_ERRORS);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const pictureInputRef = useRef();
 	const isEditing = !!placeToEdit;
 
-	const onPictureChange = (pictureFile) => {
-		convertImageFiletoBase64String(pictureFile).then((base64String) =>
-			setPicture({
-				file: pictureFile,
-				base64String,
-			})
-		);
+	const onInputChange = (event) => {
+		const { name, value } = event.target;
+
+		setFormValues((prevState) => ({ ...prevState, [name]: value }));
+	};
+
+	const onPictureChange = (event) => {
+		const name = event.target.name;
+		const pictureFile = event.target.files[0];
+
+		convertImageFiletoBase64String(pictureFile).then((base64String) => {
+			onInputChange({
+				target: {
+					name,
+					value: {
+						file: pictureFile,
+						base64String,
+					},
+				},
+			});
+		});
 	};
 
 	const onFormSubmit = async (event) => {
 		event.preventDefault();
+		setIsSubmitting(true);
 
 		const placeDetails = {
+			...formValues,
 			id: isEditing ? defaultFormFields.id : uuid(),
-			name,
-			address,
-			rating,
-			type,
-			picture: picture.base64String,
+			picture: formValues.picture.base64String,
 		};
 
-		const isValid = await placeSchema.isValid(placeDetails);
+		const waiter = new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(placeSchema.isValid(placeDetails));
+			}, [3000]);
+		});
+
+		const isValid = await waiter;
+		// const isValid = await placeSchema.isValid(placeDetails);
 
 		if (isValid) {
 			if (isEditing) {
@@ -70,17 +86,14 @@ const PlaceForm = ({
 				setErrors(fieldErrors);
 			});
 		}
+
+		setIsSubmitting(false);
 	};
 
 	const onFormReset = (event) => {
 		event.preventDefault();
 
-		setName(defaultFormFields.name);
-		setAddress(defaultFormFields.address);
-		setRating(defaultFormFields.rating);
-		setType(defaultFormFields.type);
-		setPicture(defaultFormFields.picture);
-
+		setFormValues(defaultFormFields);
 		setErrors(DEFAULT_FORM_FIELD_ERRORS);
 	};
 
@@ -91,13 +104,13 @@ const PlaceForm = ({
 		// src: https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag:~:text=In%20React%2C%20an%20%3Cinput%20type%3D%22file%22%20/%3E%20is%20always%20an%20uncontrolled%20component%20because%20its%20value%20can%20only%20be%20set%20by%20a%20user%2C%20and%20not%20programmatically.
 
 		if (pictureInputRef.current) {
-			if (picture.file) {
-				pictureInputRef.current.file = picture.file;
+			if (formValues.picture.file) {
+				pictureInputRef.current.file = formValues.picture.file;
 			} else {
 				pictureInputRef.current.value = "";
 			}
 		}
-	}, [picture]);
+	}, [formValues.picture]);
 
 	return (
 		<form
@@ -112,8 +125,9 @@ const PlaceForm = ({
 				type="text"
 				label="Name:"
 				placeholder="Name"
-				value={name}
-				onChange={(event) => setName(event.target.value)}
+				name="name"
+				value={formValues.name}
+				onChange={onInputChange}
 				error={errors.name}
 				required
 			/>
@@ -123,8 +137,9 @@ const PlaceForm = ({
 				type="text"
 				label="Address:"
 				placeholder="Address"
-				value={address}
-				onChange={(event) => setAddress(event.target.value)}
+				name="address"
+				value={formValues.address}
+				onChange={onInputChange}
 				error={errors.address}
 				required
 			/>
@@ -136,8 +151,9 @@ const PlaceForm = ({
 				placeholder="Rating"
 				min={1}
 				max={5}
-				value={rating}
-				onChange={(event) => setRating(event.target.value)}
+				name="rating"
+				value={formValues.rating}
+				onChange={onInputChange}
 				error={errors.rating}
 				required
 			/>
@@ -147,8 +163,9 @@ const PlaceForm = ({
 				componentClass="select"
 				label="Type:"
 				placeholder="Type"
-				value={type}
-				onChange={(event) => setType(event.target.value)}
+				name="type"
+				value={formValues.type}
+				onChange={onInputChange}
 				error={errors.type}
 				required
 			>
@@ -165,7 +182,8 @@ const PlaceForm = ({
 				type="file"
 				label="Picture:"
 				placeholder="Picture"
-				onChange={(event) => onPictureChange(event.target.files[0])}
+				name="picture"
+				onChange={onPictureChange}
 				error={errors.picture}
 				required
 			/>
@@ -177,6 +195,7 @@ const PlaceForm = ({
 							bsStyle="success"
 							bsSize="large"
 							type="submit"
+							isLoading={isSubmitting}
 						>
 							Submit
 						</Button>
@@ -185,6 +204,7 @@ const PlaceForm = ({
 							bsStyle="warning"
 							bsSize="large"
 							type="reset"
+							disabled={isSubmitting}
 						>
 							Reset
 						</Button>

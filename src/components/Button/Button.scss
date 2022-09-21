@@ -2,12 +2,35 @@
 
 .button {
 	background-image: none;
+	position: relative;
 
 	&,
 	&:focus,
 	&:focus-visible {
 		border: 0;
 		outline: 0 !important;
+	}
+
+	&__spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		transition: opacity 0.1s ease-in;
+
+		&--visible {
+			opacity: 1;
+		}
+	}
+
+	&__children {
+		opacity: 0;
+		transition: opacity 0.1s ease-in;
+
+		&--visible {
+			opacity: 1;
+		}
 	}
 
 	&--primary {

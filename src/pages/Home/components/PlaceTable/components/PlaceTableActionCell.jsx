@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-import Button from "../../Button";
+import Button from "../../../../../components/Button";
 
 const PlaceTableActionCell = ({ editPageUrl, deletePlace }) => {
 	return (
