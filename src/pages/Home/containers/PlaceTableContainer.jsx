@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 
-import { deletePlace } from "../store/actions";
+import { deletePlace } from "../../../store/actions";
 import PlaceTable from "../components/PlaceTable";
 import {
 	NO_PLACES_ADDED,
 	NO_PLACES_Found,
 	SORT_DIRECTION_ASC,
 	SORT_DIRECTION_NORMAL,
-} from "../utils/constants";
+} from "../../../utils/constants";
 
 const sortPlacesByRating = (places, sortDirection) => {
 	return [...places].sort((a, b) => {

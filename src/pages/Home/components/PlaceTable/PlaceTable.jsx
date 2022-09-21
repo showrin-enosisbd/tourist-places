@@ -11,7 +11,7 @@ import {
 	PLACE_TABLE_RATING_HEADER,
 	SORT_DIRECTION_ASC,
 	SORT_DIRECTION_DESC,
-} from "../../utils/constants";
+} from "../../../../utils/constants";
 import PlaceTableActionCell from "./components/PlaceTableActionCell";
 import CaretUp from "./components/CaretUp";
 import CaretDown from "./components/CaretDown";

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Grid, Col, Row, PageHeader } from "react-bootstrap";
 
 import Button from "../../components/Button";
-import PlaceTableContainer from "../../containers/PlaceTableContainer";
+import PlaceTableContainer from "./containers/PlaceTableContainer";
 import SearchInput from "../../components/SearchInput";
 import {
 	SORT_DIRECTION_ASC,
