@@ -2,7 +2,7 @@ import React from "react";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import Layout from "../../components/Layout";
-import LoginForm from "./components/LoginForm";
+import LoginContainer from "./containers/LoginContainer";
 
 const Login = () => {
 	return (
@@ -13,7 +13,7 @@ const Login = () => {
 						<PageHeader>Login</PageHeader>
 						<Row>
 							<Col xs={12}>
-								<LoginForm />
+								<LoginContainer />
 							</Col>
 						</Row>
 					</Col>

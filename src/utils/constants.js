@@ -41,3 +41,12 @@ export const SORT_DIRECTION_NORMAL = "none";
 
 export const NO_PLACES_ADDED = "No places added yet...";
 export const NO_PLACES_Found = "No places found...";
+
+export const DEFAULT_LOGIN_FORM_FIELDS = {
+	email: "",
+	password: "",
+};
+export const DEFAULT_LOGIN_FORM_FIELD_ERRORS = {
+	email: "",
+	password: "",
+};

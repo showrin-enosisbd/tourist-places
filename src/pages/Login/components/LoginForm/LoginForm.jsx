@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Button from "../../../../components/Button";
 
 import FieldGroup from "../../../../components/FieldGroup";
+import {
+	DEFAULT_LOGIN_FORM_FIELDS,
+	DEFAULT_LOGIN_FORM_FIELD_ERRORS,
+} from "../../../../utils/constants";
 import convertFirstLetterToUpperCase from "../../../../utils/convertFirstLetterToUpperCase";
 import loginSchema from "../../../../validations/loginSchema";
+import useLoginApi from "../../../../api/hooks/useLoginApi";
 
-const LoginForm = ({ history: browserHistory }) => {
-	const [formValues, setFormValues] = useState({
-		email: "",
-		password: "",
+const LoginForm = ({ history: browserHistory, setUser }) => {
+	const [formValues, setFormValues] = useState(DEFAULT_LOGIN_FORM_FIELDS);
+	const [errors, setErrors] = useState(DEFAULT_LOGIN_FORM_FIELD_ERRORS);
+	const [isValidating, setIsValidating] = useState(false);
+	const { data, isLoading, error: apiError, callApi } = useLoginApi({
+		email: formValues.email,
+		password: formValues.password,
 	});
-	const [errors, setErrors] = useState({
-		email: "",
-		password: "",
-	});
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const onInputChange = (event) => {
 		const { name, value } = event.target;
@@ -26,18 +29,17 @@ const LoginForm = ({ history: browserHistory }) => {
 
 	const onFormSubmit = async (event) => {
 		event.preventDefault();
-		setIsSubmitting(true);
+		setIsValidating(true);
 
 		const isValid = await loginSchema.isValid(formValues);
 
 		if (isValid) {
-			// api call here ....
+			setErrors(DEFAULT_LOGIN_FORM_FIELD_ERRORS);
+			setIsValidating(false);
 
-			setIsSubmitting(false);
-			browserHistory.push("/");
+			callApi();
 		} else {
 			loginSchema.validate(formValues, { abortEarly: false }).catch((err) => {
-				console.log(err.inner);
 				const fieldErrors = err.inner.reduce(
 					(acc, error) => ({
 						...acc,
@@ -47,11 +49,24 @@ const LoginForm = ({ history: browserHistory }) => {
 				);
 
 				setErrors(fieldErrors);
+				setIsValidating(false);
 			});
 		}
-
-		setIsSubmitting(false);
 	};
+
+	useEffect(() => {
+		if ("token" in data) {
+			document.cookie = `tkn=${data.token}`;
+
+			setUser({
+				id: data.id,
+				username: data.username,
+				email: data.email,
+			});
+
+			browserHistory.push("/");
+		}
+	}, [data]);
 
 	return (
 		<form className="login-form" onSubmit={onFormSubmit} noValidate>
@@ -63,7 +78,7 @@ const LoginForm = ({ history: browserHistory }) => {
 				name="email"
 				value={formValues.email}
 				onChange={onInputChange}
-				error={errors.email}
+				error={errors.email || apiError}
 				required
 			/>
 			<FieldGroup
@@ -74,7 +89,7 @@ const LoginForm = ({ history: browserHistory }) => {
 				name="password"
 				value={formValues.password}
 				onChange={onInputChange}
-				error={errors.password}
+				error={errors.password || apiError}
 				required
 			/>
 			<Row>
@@ -83,7 +98,7 @@ const LoginForm = ({ history: browserHistory }) => {
 						bsStyle="success"
 						bsSize="large"
 						type="submit"
-						isLoading={isSubmitting}
+						isLoading={isValidating || isLoading}
 					>
 						Login
 					</Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import classNames from "classnames";
 import {
 	Row,
@@ -9,18 +9,6 @@ import {
 } from "react-bootstrap";
 
 const FieldGroup = ({ className, id, label, error, required, ...props }) => {
-	const [delayedErrorMsg, setDelayedErrorMsg] = useState("");
-
-	useEffect(() => {
-		if (error) {
-			setDelayedErrorMsg(error);
-		} else {
-			setTimeout(() => {
-				setDelayedErrorMsg(error);
-			}, 150);
-		}
-	}, [error]);
-
 	return (
 		<FormGroup
 			className={classNames(
@@ -51,7 +39,7 @@ const FieldGroup = ({ className, id, label, error, required, ...props }) => {
 							"field-group__error--visible": !!error,
 						})}
 					>
-						{delayedErrorMsg}
+						{error}
 					</div>
 				</Col>
 			</Row>
