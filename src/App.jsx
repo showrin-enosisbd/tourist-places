@@ -7,10 +7,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import New from "./pages/New";
-import EditPageContainer from "./containers/EditPageContainer";
 import NotFound from "./pages/NotFound";
 
 import "./App.scss";
+import Edit from "./pages/Edit";
 
 function App() {
 	return (
@@ -21,7 +21,7 @@ function App() {
 					<Route path="/login" component={Login} />
 					<Route path="/signup" component={Signup} />
 					<Route path="/new" component={New} />
-					<Route path="/edit/:id" component={EditPageContainer} />
+					<Route path="/edit/:id" component={Edit} />
 					<Route component={NotFound} />
 				</Switch>
 			</BrowserRouter>

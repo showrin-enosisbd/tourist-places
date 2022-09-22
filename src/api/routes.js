@@ -5,6 +5,9 @@ const routes = {
 	logout: "/account/logout/",
 	places: {
 		fetch: "/places/",
+		create: "/places/",
+		fetchById: (id) => `/places/${id}/`,
+		update: (id) => `/places/${id}/`,
 	},
 };
 
