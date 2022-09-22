@@ -23,6 +23,7 @@ const useLoginApi = ({ email, password }) => {
 			.catch((err) => {
 				const errMsg = Object.values(err.response.data)[0][0];
 
+				setData({});
 				setError(errMsg);
 				setIsLoading(false);
 			});

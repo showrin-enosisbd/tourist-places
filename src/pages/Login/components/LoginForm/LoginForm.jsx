@@ -11,6 +11,7 @@ import {
 import convertFirstLetterToUpperCase from "../../../../utils/convertFirstLetterToUpperCase";
 import loginSchema from "../../../../validations/loginSchema";
 import useLoginApi from "../../../../api/hooks/useLoginApi";
+import setBrowserCookie from "../../../../utils/setBrowserCookie";
 
 const LoginForm = ({ history: browserHistory, setUser }) => {
 	const [formValues, setFormValues] = useState(DEFAULT_LOGIN_FORM_FIELDS);
@@ -56,7 +57,10 @@ const LoginForm = ({ history: browserHistory, setUser }) => {
 
 	useEffect(() => {
 		if ("token" in data) {
-			document.cookie = `tkn=${data.token}`;
+			setBrowserCookie({
+				name: "tkn",
+				value: data.token,
+			});
 
 			setUser({
 				id: data.id,

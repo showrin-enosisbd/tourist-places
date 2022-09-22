@@ -11,6 +11,7 @@ import {
 import convertFirstLetterToUpperCase from "../../../../utils/convertFirstLetterToUpperCase";
 import signupSchema from "../../../../validations/signupSchema";
 import useSignupApi from "../../../../api/hooks/useSignupApi";
+import setBrowserCookie from "../../../../utils/setBrowserCookie";
 
 const SignupForm = ({ history: browserHistory, setUser }) => {
 	const [formValues, setFormValues] = useState(DEFAULT_SIGNUP_FORM_FIELDS);
@@ -57,7 +58,10 @@ const SignupForm = ({ history: browserHistory, setUser }) => {
 
 	useEffect(() => {
 		if ("token" in data) {
-			document.cookie = `tkn=${data.token}`;
+			setBrowserCookie({
+				name: "tkn",
+				value: data.token,
+			});
 
 			setUser({
 				id: data.id,

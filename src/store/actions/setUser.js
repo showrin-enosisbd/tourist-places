@@ -2,11 +2,7 @@ import { SET_USER } from "../types";
 
 const setUser = (user) => ({
 	type: SET_USER,
-	payload: {
-		id: user.id,
-		username: user.username,
-		email: user.email,
-	},
+	payload: user,
 });
 
 export default setUser;

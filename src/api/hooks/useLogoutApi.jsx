@@ -1,36 +1,36 @@
 import { useState } from "react";
-import apiClient from "../apiClient";
+import apiClient, { authToken } from "../apiClient";
 import routes from "../routes";
 
-const useSignupApi = ({ username, email, password }) => {
+const useLogoutApi = () => {
 	const [isLoading, setIsLoading] = useState(false);
-	const [data, setData] = useState({});
+	const [status, setStatus] = useState(null);
 	const [error, setError] = useState("");
 
 	const callApi = () => {
 		setIsLoading(true);
 
 		apiClient
-			.post(routes.signup, {
-				username,
-				email,
-				password,
+			.get(routes.logout, {
+				headers: {
+					Authorization: authToken(),
+				},
 			})
 			.then((response) => {
-				setData(response.data);
+				setStatus(response.status);
 				setError("");
 				setIsLoading(false);
 			})
 			.catch((err) => {
 				const errMsg = err.response.data;
 
-				setData({});
+				setStatus(err.response.status);
 				setError(errMsg);
 				setIsLoading(false);
 			});
 	};
 
-	return { data, isLoading, error, callApi };
+	return { status, isLoading, error, callApi };
 };
 
-export default useSignupApi;
+export default useLogoutApi;

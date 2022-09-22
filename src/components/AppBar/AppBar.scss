@@ -25,11 +25,14 @@
 	}
 
 	&__nav {
+		display: flex;
+		align-items: center;
+
 		&-user {
+			display: inline-block;
 			padding: 6px 12px;
-			font-weight: 500;
+			font-weight: 700;
 			font-size: 14px;
-			height: 32px;
 		}
 
 		&-link button {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Grid, Col, Row } from "react-bootstrap";
 import Button from "../Button";
 
-const AppBar = ({ user }) => {
+const AppBar = ({ user, onLogout }) => {
 	return (
 		<header className="app-bar">
 			<Grid fluid>
@@ -24,9 +24,11 @@ const AppBar = ({ user }) => {
 							)}
 							|
 							{user && user.username ? (
-								<Link className="app-bar__nav-link" to="/logout">
-									<Button bsStyle="link">Logout</Button>
-								</Link>
+								<span className="app-bar__nav-link">
+									<Button bsStyle="link" onClick={onLogout}>
+										Logout
+									</Button>
+								</span>
 							) : (
 								<Link className="app-bar__nav-link" to="/signup">
 									<Button bsStyle="link">Signup</Button>
