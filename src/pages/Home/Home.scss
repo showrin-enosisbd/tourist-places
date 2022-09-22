@@ -2,4 +2,10 @@
 	&__table {
 		margin-top: 20px;
 	}
+
+	&__pagination {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
 }

@@ -28,7 +28,11 @@ const PlaceTable = ({
 						<PlaceTableEmptyMessageRow emptyTableMsg={emptyTableMsg} />
 					)}
 					{places.map((place) => (
-						<PlaceTableRow place={place} deletePlace={deletePlace} />
+						<PlaceTableRow
+							key={place.id}
+							place={place}
+							deletePlace={deletePlace}
+						/>
 					))}
 				</tbody>
 			</Table>

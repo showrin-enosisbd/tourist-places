@@ -8,11 +8,11 @@ const useFetchPlacesApi = () => {
 	const [status, setStatus] = useState(null);
 	const [error, setError] = useState("");
 
-	const callApi = () => {
+	const callApi = (queryParams) => {
 		setIsLoading(true);
 
 		apiClient
-			.get(routes.places.fetch)
+			.get(routes.places.fetch, { params: queryParams })
 			.then((response) => {
 				setData(response.data);
 				setError("");
