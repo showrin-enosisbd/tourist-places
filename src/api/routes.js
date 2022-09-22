@@ -8,6 +8,7 @@ const routes = {
 		create: "/places/",
 		fetchById: (id) => `/places/${id}/`,
 		update: (id) => `/places/${id}/`,
+		deleteById: (id) => `/places/${id}/`,
 	},
 };
 

@@ -1,66 +1,47 @@
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
 
-import { deletePlace } from "../../../store/actions";
 import PlaceTable from "../components/PlaceTable";
-import {
-	NO_PLACES_ADDED,
-	NO_PLACES_Found,
-	SORT_DIRECTION_ASC,
-	SORT_DIRECTION_NORMAL,
-} from "../../../utils/constants";
+import { NO_PLACES_HERE } from "../../../utils/constants";
+import useFetchPlacesApi from "../../../api/hooks/useFetchPlacesApi";
+import useDeletePlaceApi from "../../../api/hooks/useDeletePlaceApi";
 
-const sortPlacesByRating = (places, sortDirection) => {
-	return [...places].sort((a, b) => {
-		const firstRating = parseInt(a.rating, 10);
-		const secondRating = parseInt(b.rating, 10);
+const PlaceTableContainer = ({ className }) => {
+	const [emptyTableMsg, setEmptyTableMsg] = useState("");
+	const { data, callApi: callFetchPlacesApi } = useFetchPlacesApi();
+	const {
+		status: deletePlaceApiStatus,
+		callApi: callDeletePlacesApi,
+	} = useDeletePlaceApi();
+	const places = data ? data.results : [];
 
-		if (sortDirection === SORT_DIRECTION_ASC) {
-			return firstRating - secondRating;
+	const deletePlace = (id) => {
+		callDeletePlacesApi(id);
+	};
+
+	useEffect(() => {
+		if (places.length === 0) {
+			setEmptyTableMsg(NO_PLACES_HERE);
 		}
+	}, [places]);
 
-		return secondRating - firstRating;
-	});
+	useEffect(() => {
+		if (deletePlaceApiStatus === 204) {
+			callFetchPlacesApi();
+		}
+	}, [deletePlaceApiStatus]);
+
+	useEffect(() => {
+		callFetchPlacesApi();
+	}, []);
+
+	return (
+		<PlaceTable
+			className={className}
+			places={places}
+			emptyTableMsg={emptyTableMsg}
+			deletePlace={deletePlace}
+		/>
+	);
 };
 
-const searchPlaces = (places, keyWord) => {
-	return places.filter((place) => place.name.toLowerCase().includes(keyWord));
-};
-
-const mapStateToProps = (state, ownProps) => {
-	const { searchKeyword, sortDirection } = ownProps;
-	let sortedAndFilteredPlaces = state.places;
-	let emptyTableMsg = "";
-
-	if (sortDirection !== SORT_DIRECTION_NORMAL) {
-		sortedAndFilteredPlaces = sortPlacesByRating(
-			sortedAndFilteredPlaces,
-			sortDirection
-		);
-	}
-
-	if (searchKeyword) {
-		sortedAndFilteredPlaces = searchPlaces(
-			sortedAndFilteredPlaces,
-			searchKeyword
-		);
-	}
-
-	if (state.places.length === 0) {
-		emptyTableMsg = NO_PLACES_ADDED;
-	} else if (sortedAndFilteredPlaces.length === 0) {
-		emptyTableMsg = NO_PLACES_Found;
-	}
-
-	return {
-		places: sortedAndFilteredPlaces,
-		emptyTableMsg,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		deletePlace: (placeId) => dispatch(deletePlace(placeId)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceTable);
+export default PlaceTableContainer;
