@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 
 import Button from "../../../../../components/Button";
 
-const PlaceTableActionCell = ({ editPageUrl, deletePlace }) => {
+const PlaceTableActionCell = ({ editPageUrl, deletePlace, disabled }) => {
 	return (
 		<Fragment>
 			<Link className="place-table__action-button" to={editPageUrl}>
-				<Button bsStyle="primary">Update</Button>
+				<Button bsStyle="primary" disabled={disabled}>
+					Update
+				</Button>
 			</Link>
 			<Button
 				className="place-table__action-button"
 				bsStyle="danger"
+				disabled={disabled}
 				onClick={deletePlace}
 			>
 				Delete

@@ -4,9 +4,11 @@ import PlaceTable from "../components/PlaceTable";
 import { NO_PLACES_HERE } from "../../../utils/constants";
 import useFetchPlacesApi from "../../../api/hooks/useFetchPlacesApi";
 import useDeletePlaceApi from "../../../api/hooks/useDeletePlaceApi";
+import { connect } from "react-redux";
 
 const PlaceTableContainer = ({
 	className,
+	user,
 	pageNo,
 	sortDirection,
 	onSortDirectionChange,
@@ -60,6 +62,7 @@ const PlaceTableContainer = ({
 	return (
 		<PlaceTable
 			className={className}
+			user={user}
 			places={places}
 			emptyTableMsg={emptyTableMsg}
 			deletePlace={deletePlace}
@@ -69,4 +72,10 @@ const PlaceTableContainer = ({
 	);
 };
 
-export default PlaceTableContainer;
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+export default connect(mapStateToProps, null)(PlaceTableContainer);

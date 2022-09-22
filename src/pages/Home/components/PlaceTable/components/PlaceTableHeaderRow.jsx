@@ -8,9 +8,13 @@ import {
 	PLACE_TABLE_RATING_HEADER,
 	SORT_DIRECTION_DESC,
 	SORT_DIRECTION_ASC,
+	PLACE_TABLE_ACTION_HEADER,
 } from "../../../../../utils/constants";
+import getAuthTokenFromCookies from "../../../../../utils/getAuthTokenFromCookies";
 
 const PlaceTableHeaderRow = ({ sortDirection, onSortDirectionChange }) => {
+	const authToken = getAuthTokenFromCookies();
+
 	return (
 		<tr>
 			{PLACE_TABLE_HEADERS.map((header) => {
@@ -38,6 +42,10 @@ const PlaceTableHeaderRow = ({ sortDirection, onSortDirectionChange }) => {
 							</div>
 						</th>
 					);
+				}
+
+				if (!authToken && header === PLACE_TABLE_ACTION_HEADER) {
+					return null;
 				}
 
 				return <th key={header}>{header}</th>;
