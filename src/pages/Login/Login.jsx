@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import LayoutContainer from "../../containers/LayoutContainer";
+import getAuthTokenFromCookies from "../../utils/getAuthTokenFromCookies";
 import LoginContainer from "./containers/LoginContainer";
 
-const Login = () => {
+const Login = ({ history: browserHistory }) => {
+	const token = getAuthTokenFromCookies();
+
+	useEffect(() => {
+		if (token) {
+			browserHistory.push("/");
+		}
+	}, [token]);
+
 	return (
 		<LayoutContainer>
 			<Grid className="edit-page">
@@ -23,4 +33,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default withRouter(Login);

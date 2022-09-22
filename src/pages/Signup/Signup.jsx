@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 import LayoutContainer from "../../containers/LayoutContainer";
+import getAuthTokenFromCookies from "../../utils/getAuthTokenFromCookies";
 import SignupFormContainer from "./containers/SignupFormContainer";
 
-const Signup = () => {
+const Signup = ({ history: browserHistory }) => {
+	const token = getAuthTokenFromCookies();
+
+	useEffect(() => {
+		if (token) {
+			browserHistory.push("/");
+		}
+	}, [token]);
+
 	return (
 		<LayoutContainer>
 			<Grid className="edit-page">
@@ -23,4 +33,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default withRouter(Signup);
