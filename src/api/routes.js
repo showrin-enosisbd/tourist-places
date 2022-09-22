@@ -3,6 +3,9 @@ const routes = {
 	signup: "/account/register/",
 	fetchMe: "/account/users/me/",
 	logout: "/account/logout/",
+	places: {
+		fetch: "/places/",
+	},
 };
 
 export default routes;
