@@ -6,11 +6,19 @@ import Button from "../../../../../components/Button";
 const PlaceTableActionCell = ({ editPageUrl, deletePlace, disabled }) => {
 	return (
 		<Fragment>
-			<Link className="place-table__action-button" to={editPageUrl}>
-				<Button bsStyle="primary" disabled={disabled}>
+			{!disabled ? (
+				<Link className="place-table__action-button" to={editPageUrl}>
+					<Button bsStyle="primary">Update</Button>
+				</Link>
+			) : (
+				<Button
+					className="place-table__action-button"
+					bsStyle="primary"
+					disabled={disabled}
+				>
 					Update
 				</Button>
-			</Link>
+			)}
 			<Button
 				className="place-table__action-button"
 				bsStyle="danger"

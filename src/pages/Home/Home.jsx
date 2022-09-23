@@ -72,11 +72,13 @@ const Home = () => {
 									setTotalPages={setTotalPages}
 								/>
 							</Col>
-							{totalPages > 1 ? (
-								<Col className="home-page__pagination" xs={12}>
-									<Pagination>{paginationItems}</Pagination>
-								</Col>
-							) : null}
+						</Row>
+						<Row>
+							<Col className="home-page__pagination" xs={12}>
+								<Pagination>
+									{totalPages > 1 ? paginationItems : null}
+								</Pagination>
+							</Col>
 						</Row>
 						<Row>
 							<Col xs={12}>

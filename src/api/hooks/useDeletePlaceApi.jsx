@@ -10,6 +10,9 @@ const useDeletePlaceApi = () => {
 
 	const callApi = (id) => {
 		setIsLoading(true);
+		setError("");
+		setStatus(null);
+		setData(null);
 
 		apiClient
 			.delete(routes.places.deleteById(id), {

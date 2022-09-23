@@ -10,6 +10,7 @@ const useFetchPlacesApi = () => {
 
 	const callApi = (queryParams) => {
 		setIsLoading(true);
+		setStatus(null);
 
 		apiClient
 			.get(routes.places.fetch, { params: queryParams })

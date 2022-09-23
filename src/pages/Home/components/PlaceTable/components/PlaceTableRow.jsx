@@ -35,7 +35,7 @@ const PlaceTableRow = ({ place, deletePlace, user }) => {
 				} else if (header === PLACE_TABLE_ACTION_HEADER) {
 					tableData = authToken ? (
 						<PlaceTableActionCell
-							disabled={place.creator !== user.id}
+							disabled={user && place.creator !== user.id}
 							editPageUrl={`/edit/${place.id}`}
 							deletePlace={onDeletePlace}
 						/>
