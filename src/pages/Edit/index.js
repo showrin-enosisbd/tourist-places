@@ -1,4 +1,4 @@
-import Edit from "./Edit";
+import EditPageContainer from "./containers/EditPageContainer";
 import "./Edit.scss";
 
-export default Edit;
+export default EditPageContainer;

@@ -1,12 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import Button from "../../components/Button";
 import PlaceFormContainer from "../../containers/PlaceFormContainer";
 import LayoutContainer from "../../containers/LayoutContainer";
+import getAuthTokenFromCookies from "../../utils/getAuthTokenFromCookies";
 
-const New = () => {
+const New = ({ history: browserHistory, user }) => {
+	const authToken = getAuthTokenFromCookies();
+
+	useEffect(() => {
+		if (!authToken && !user) {
+			browserHistory.push("/login");
+		}
+	}, [user, authToken]);
+
 	return (
 		<LayoutContainer>
 			<Grid className="new-page">
@@ -30,4 +39,4 @@ const New = () => {
 	);
 };
 
-export default New;
+export default withRouter(New);

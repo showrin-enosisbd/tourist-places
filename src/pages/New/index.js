@@ -1,4 +1,4 @@
-import New from "./New";
+import NewPageContainer from "./containers/NewPageContainer";
 import "./New.scss";
 
-export default New;
+export default NewPageContainer;

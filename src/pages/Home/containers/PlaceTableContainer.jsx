@@ -14,6 +14,7 @@ const PlaceTableContainer = ({
 	onSortDirectionChange,
 	searchKeyword,
 	setTotalPages,
+	setPageNo,
 }) => {
 	const [emptyTableMsg, setEmptyTableMsg] = useState("");
 	const { data, callApi: callFetchPlacesApi } = useFetchPlacesApi();
@@ -21,8 +22,14 @@ const PlaceTableContainer = ({
 		status: deletePlaceApiStatus,
 		callApi: callDeletePlacesApi,
 	} = useDeletePlaceApi();
-	const totalPages = data ? data.total_pages : 0;
+	const totalPages = data ? data.total_pages : 1;
 	const places = data ? data.results : [];
+	const queryParams = {
+		q: searchKeyword,
+		sort_direction: sortDirection,
+		sort_by: "rating",
+		page: pageNo,
+	};
 
 	const deletePlace = (id) => {
 		callDeletePlacesApi(id);
@@ -40,24 +47,20 @@ const PlaceTableContainer = ({
 
 	useEffect(() => {
 		if (deletePlaceApiStatus === 204) {
-			callFetchPlacesApi();
+			if (places.length === 1) {
+				// If we are deleting the last item of a page
+				// we have set the page cursor to the previous page
+				// otherwise it'll give invalid page response
+				setPageNo(totalPages - 1);
+			} else {
+				callFetchPlacesApi(queryParams);
+			}
 		}
 	}, [deletePlaceApiStatus]);
 
 	useEffect(() => {
-		const queryParams = {
-			q: searchKeyword,
-			sort_direction: sortDirection,
-			sort_by: "rating",
-			page: pageNo,
-		};
-
 		callFetchPlacesApi(queryParams);
 	}, [searchKeyword, sortDirection, pageNo]);
-
-	useEffect(() => {
-		callFetchPlacesApi();
-	}, []);
 
 	return (
 		<PlaceTable

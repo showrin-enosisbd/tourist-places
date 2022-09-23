@@ -1,21 +1,33 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 import Button from "../../components/Button";
 import PlaceFormContainer from "../../containers/PlaceFormContainer";
 import LayoutContainer from "../../containers/LayoutContainer";
 import useFetchPlaceApi from "../../api/hooks/useFetchPlaceApi";
+import getAuthTokenFromCookies from "../../utils/getAuthTokenFromCookies";
 
-const Edit = ({ match }) => {
+const Edit = ({ match, history: browserHistory, user }) => {
 	const { id } = match.params;
 	const { data, callApi: callFetchPlaceApi } = useFetchPlaceApi({
 		id,
 	});
+	const authToken = getAuthTokenFromCookies();
 
 	useEffect(() => {
-		callFetchPlaceApi();
-	}, []);
+		if (authToken) {
+			callFetchPlaceApi();
+		} else {
+			browserHistory.push("/");
+		}
+	}, [authToken]);
+
+	useEffect(() => {
+		if (!authToken && !user) {
+			browserHistory.push("/login");
+		}
+	}, [user, authToken]);
 
 	return (
 		<LayoutContainer>
@@ -40,4 +52,4 @@ const Edit = ({ match }) => {
 	);
 };
 
-export default Edit;
+export default withRouter(Edit);

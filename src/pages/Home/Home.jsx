@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Col, Row, PageHeader, Pagination } from "react-bootstrap";
 
@@ -11,13 +11,14 @@ import {
 	SORT_DIRECTION_NORMAL,
 } from "../../utils/constants";
 import LayoutContainer from "../../containers/LayoutContainer";
-import { useMemo } from "react";
+import getAuthTokenFromCookies from "../../utils/getAuthTokenFromCookies";
 
 const Home = () => {
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [sortDirection, setSortDirection] = useState(SORT_DIRECTION_NORMAL);
-	const [totalPages, setTotalPages] = useState(0);
+	const [totalPages, setTotalPages] = useState(1);
 	const [pageNo, setPageNo] = useState(1);
+	const authToken = getAuthTokenFromCookies();
 
 	const paginationItems = useMemo(() => {
 		const items = [];
@@ -70,6 +71,7 @@ const Home = () => {
 									pageNo={pageNo}
 									searchKeyword={searchKeyword}
 									setTotalPages={setTotalPages}
+									setPageNo={setPageNo}
 								/>
 							</Col>
 						</Row>
@@ -80,15 +82,17 @@ const Home = () => {
 								</Pagination>
 							</Col>
 						</Row>
-						<Row>
-							<Col xs={12}>
-								<Link to="/new">
-									<Button bsStyle="primary" bsSize="large">
-										Create a new tourist place
-									</Button>
-								</Link>
-							</Col>
-						</Row>
+						{!!authToken && (
+							<Row>
+								<Col xs={12}>
+									<Link to="/new">
+										<Button bsStyle="primary" bsSize="large">
+											Create a new tourist place
+										</Button>
+									</Link>
+								</Col>
+							</Row>
+						)}
 					</Col>
 				</Row>
 			</Grid>
