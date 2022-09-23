@@ -1,66 +1,84 @@
+import React, { useEffect, useState } from "react";
+
+import PlaceTable from "../components/PlaceTable";
+import { NO_PLACES_HERE } from "../../../utils/constants";
+import useFetchPlacesApi from "../../../api/hooks/useFetchPlacesApi";
+import useDeletePlaceApi from "../../../api/hooks/useDeletePlaceApi";
 import { connect } from "react-redux";
 
-import { deletePlace } from "../../../store/actions";
-import PlaceTable from "../components/PlaceTable";
-import {
-	NO_PLACES_ADDED,
-	NO_PLACES_Found,
-	SORT_DIRECTION_ASC,
-	SORT_DIRECTION_NORMAL,
-} from "../../../utils/constants";
+const PlaceTableContainer = ({
+	className,
+	user,
+	pageNo,
+	sortDirection,
+	onSortDirectionChange,
+	searchKeyword,
+	setTotalPages,
+	setPageNo,
+}) => {
+	const [emptyTableMsg, setEmptyTableMsg] = useState("");
+	const { data, callApi: callFetchPlacesApi } = useFetchPlacesApi();
+	const {
+		status: deletePlaceApiStatus,
+		callApi: callDeletePlacesApi,
+	} = useDeletePlaceApi();
+	const totalPages = data ? data.total_pages : 1;
+	const places = data ? data.results : [];
+	const queryParams = {
+		q: searchKeyword,
+		sort_direction: sortDirection,
+		sort_by: "rating",
+		page: pageNo,
+	};
 
-const sortPlacesByRating = (places, sortDirection) => {
-	return [...places].sort((a, b) => {
-		const firstRating = parseInt(a.rating, 10);
-		const secondRating = parseInt(b.rating, 10);
+	const deletePlace = (id) => {
+		callDeletePlacesApi(id);
+	};
 
-		if (sortDirection === SORT_DIRECTION_ASC) {
-			return firstRating - secondRating;
+	useEffect(() => {
+		setTotalPages(totalPages);
+	}, [totalPages]);
+
+	useEffect(() => {
+		if (places.length === 0) {
+			setEmptyTableMsg(NO_PLACES_HERE);
 		}
+	}, [places]);
 
-		return secondRating - firstRating;
-	});
+	useEffect(() => {
+		if (deletePlaceApiStatus === 204) {
+			if (places.length === 1) {
+				// If we are deleting the last item of a page
+				// we have set the page cursor to the previous page
+				// otherwise it'll give invalid page response
+				setPageNo(totalPages - 1);
+			} else {
+				callFetchPlacesApi(queryParams);
+			}
+		}
+	}, [deletePlaceApiStatus]);
+
+	useEffect(() => {
+		callFetchPlacesApi(queryParams);
+	}, [searchKeyword, sortDirection, pageNo]);
+
+	return (
+		<PlaceTable
+			className={className}
+			user={user}
+			places={places}
+			emptyTableMsg={emptyTableMsg}
+			deletePlace={deletePlace}
+			sortDirection={sortDirection}
+			onSortDirectionChange={onSortDirectionChange}
+		/>
+	);
 };
 
-const searchPlaces = (places, keyWord) => {
-	return places.filter((place) => place.name.toLowerCase().includes(keyWord));
-};
-
-const mapStateToProps = (state, ownProps) => {
-	const { searchKeyword, sortDirection } = ownProps;
-	let sortedAndFilteredPlaces = state.places;
-	let emptyTableMsg = "";
-
-	if (sortDirection !== SORT_DIRECTION_NORMAL) {
-		sortedAndFilteredPlaces = sortPlacesByRating(
-			sortedAndFilteredPlaces,
-			sortDirection
-		);
-	}
-
-	if (searchKeyword) {
-		sortedAndFilteredPlaces = searchPlaces(
-			sortedAndFilteredPlaces,
-			searchKeyword
-		);
-	}
-
-	if (state.places.length === 0) {
-		emptyTableMsg = NO_PLACES_ADDED;
-	} else if (sortedAndFilteredPlaces.length === 0) {
-		emptyTableMsg = NO_PLACES_Found;
-	}
-
+const mapStateToProps = (state) => {
 	return {
-		places: sortedAndFilteredPlaces,
-		emptyTableMsg,
+		user: state.user,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		deletePlace: (placeId) => dispatch(deletePlace(placeId)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceTable);
+export default connect(mapStateToProps, null)(PlaceTableContainer);

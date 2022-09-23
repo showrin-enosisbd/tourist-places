@@ -1,40 +1,76 @@
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 
 import { DEFAULT_FORM_FIELDS } from "../utils/constants";
-import { addPlace, updatePlace } from "../store/actions";
 import PlaceForm from "../components/PlaceForm";
+import useUpdatePlaceApi from "../api/hooks/useUpdatePlaceApi";
+import useCreatePlaceApi from "../api/hooks/useCreatePlaceApi";
 
-const mapStateToProps = (state, ownProps) => {
-	const { placeToEdit } = ownProps;
-	let defaultFormFields = DEFAULT_FORM_FIELDS;
+const PlaceFormContainer = ({
+	placeToEdit,
+	history: browserHistory,
+	placeId,
+}) => {
+	const [defaultFormFields, setDefaultFormFields] = useState(
+		DEFAULT_FORM_FIELDS
+	);
+	const {
+		status: updatePlaceApiStatus,
+		isLoading: isUpdating,
+		error: updatePlaceApiError,
+		callApi: callUpdatePlaceApi,
+	} = useUpdatePlaceApi({ id: placeId });
+	const {
+		status: createPlaceApiStatus,
+		isLoading: isCreating,
+		error: createPlaceApiError,
+		callApi: callCreatePlaceApi,
+	} = useCreatePlaceApi();
+	const isEditing = !!placeId;
 
-	if (!!placeToEdit) {
-		defaultFormFields = {
-			id: placeToEdit.id,
-			name: placeToEdit.name,
-			address: placeToEdit.address,
-			rating: placeToEdit.rating,
-			type: placeToEdit.type,
-			picture: {
-				file: null,
-				base64String: "",
-			},
-		};
-	}
-
-	return {
-		defaultFormFields,
+	const onSubmit = (values) => {
+		if (isEditing) {
+			callUpdatePlaceApi(values);
+		} else {
+			callCreatePlaceApi(values);
+		}
 	};
+
+	useEffect(() => {
+		if (updatePlaceApiStatus === 200) {
+			browserHistory.push("/");
+		}
+	}, [updatePlaceApiStatus]);
+
+	useEffect(() => {
+		if (createPlaceApiStatus === 201) {
+			browserHistory.push("/");
+		}
+	}, [createPlaceApiStatus]);
+
+	useEffect(() => {
+		if (!!placeToEdit) {
+			setDefaultFormFields({
+				name: placeToEdit.name,
+				address: placeToEdit.address,
+				rating: placeToEdit.rating,
+				type: placeToEdit.type,
+				picture: {
+					file: null,
+					base64String: placeToEdit.picture,
+				},
+			});
+		}
+	}, [placeToEdit]);
+
+	return (
+		<PlaceForm
+			isLoading={isUpdating || isCreating}
+			apiError={updatePlaceApiError.detail || createPlaceApiError.detail}
+			defaultFormFields={defaultFormFields}
+			onSubmit={onSubmit}
+		/>
+	);
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	const { placeToEdit } = ownProps;
-
-	return {
-		addPlace: (newPlace) => dispatch(addPlace(newPlace)),
-		updatePlace: (updatedPlace) =>
-			dispatch(updatePlace(placeToEdit.id, updatedPlace)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceForm);
+export default withRouter(PlaceFormContainer);

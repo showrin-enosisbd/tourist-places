@@ -8,6 +8,7 @@ import PlaceTableRow from "./components/PlaceTableRow";
 
 const PlaceTable = ({
 	className,
+	user,
 	places,
 	deletePlace,
 	sortDirection,
@@ -28,7 +29,12 @@ const PlaceTable = ({
 						<PlaceTableEmptyMessageRow emptyTableMsg={emptyTableMsg} />
 					)}
 					{places.map((place) => (
-						<PlaceTableRow place={place} deletePlace={deletePlace} />
+						<PlaceTableRow
+							key={place.id}
+							user={user}
+							place={place}
+							deletePlace={deletePlace}
+						/>
 					))}
 				</tbody>
 			</Table>

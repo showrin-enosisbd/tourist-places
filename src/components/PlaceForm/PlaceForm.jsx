@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
 import Button from "../Button";
@@ -7,21 +6,13 @@ import FieldGroup from "../FieldGroup";
 import { DEFAULT_FORM_FIELD_ERRORS, PLACE_TYPES } from "../../utils/constants";
 import convertImageFiletoBase64String from "../../utils/convertImageFiletoBase64String";
 import convertFirstLetterToUpperCase from "../../utils/convertFirstLetterToUpperCase";
-import uuid from "../../utils/uuid";
 import placeSchema from "../../validations/placeSchema";
 
-const PlaceForm = ({
-	history: browserHistory,
-	defaultFormFields,
-	placeToEdit,
-	addPlace,
-	updatePlace,
-}) => {
+const PlaceForm = ({ defaultFormFields, apiError, onSubmit }) => {
 	const [formValues, setFormValues] = useState(defaultFormFields);
 	const [errors, setErrors] = useState(DEFAULT_FORM_FIELD_ERRORS);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const pictureInputRef = useRef();
-	const isEditing = !!placeToEdit;
 
 	const onInputChange = (event) => {
 		const { name, value } = event.target;
@@ -52,7 +43,6 @@ const PlaceForm = ({
 
 		const placeDetails = {
 			...formValues,
-			id: isEditing ? defaultFormFields.id : uuid(),
 			picture: formValues.picture.base64String,
 		};
 
@@ -66,13 +56,7 @@ const PlaceForm = ({
 		// const isValid = await placeSchema.isValid(placeDetails);
 
 		if (isValid) {
-			if (isEditing) {
-				updatePlace(placeDetails);
-			} else {
-				addPlace(placeDetails);
-			}
-
-			browserHistory.push("/");
+			onSubmit(placeDetails);
 		} else {
 			placeSchema.validate(placeDetails, { abortEarly: false }).catch((err) => {
 				const fieldErrors = err.inner.reduce(
@@ -112,6 +96,10 @@ const PlaceForm = ({
 		}
 	}, [formValues.picture]);
 
+	useEffect(() => {
+		setFormValues(defaultFormFields);
+	}, [defaultFormFields]);
+
 	return (
 		<form
 			className="add-place-form"
@@ -120,7 +108,7 @@ const PlaceForm = ({
 			noValidate
 		>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="name"
 				type="text"
 				label="Name:"
@@ -128,11 +116,11 @@ const PlaceForm = ({
 				name="name"
 				value={formValues.name}
 				onChange={onInputChange}
-				error={errors.name}
+				error={errors.name || apiError}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="address"
 				type="text"
 				label="Address:"
@@ -140,11 +128,11 @@ const PlaceForm = ({
 				name="address"
 				value={formValues.address}
 				onChange={onInputChange}
-				error={errors.address}
+				error={errors.address || apiError}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="rating"
 				type="number"
 				label="Rating:"
@@ -154,11 +142,11 @@ const PlaceForm = ({
 				name="rating"
 				value={formValues.rating}
 				onChange={onInputChange}
-				error={errors.rating}
+				error={errors.rating || apiError}
 				required
 			/>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="type"
 				componentClass="select"
 				label="Type:"
@@ -166,7 +154,7 @@ const PlaceForm = ({
 				name="type"
 				value={formValues.type}
 				onChange={onInputChange}
-				error={errors.type}
+				error={errors.type || apiError}
 				required
 			>
 				{PLACE_TYPES.map((placeType) => (
@@ -176,7 +164,7 @@ const PlaceForm = ({
 				))}
 			</FieldGroup>
 			<FieldGroup
-				className="add-place-form__input add-place-form__input--required"
+				className="add-place-form__input"
 				id="picture"
 				inputRef={pictureInputRef}
 				type="file"
@@ -184,7 +172,7 @@ const PlaceForm = ({
 				placeholder="Picture"
 				name="picture"
 				onChange={onPictureChange}
-				error={errors.picture}
+				error={errors.picture || apiError}
 				required
 			/>
 			<Row>
@@ -215,4 +203,4 @@ const PlaceForm = ({
 	);
 };
 
-export default withRouter(PlaceForm);
+export default PlaceForm;
